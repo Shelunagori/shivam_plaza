@@ -1,0 +1,131 @@
+	.portlet.light{
+		padding: 10px !important;
+		margin: 0px 0px 15px !important;
+		float: left;
+		width: 100%;
+	}
+	.light{
+		    float: left !important;
+			width: 100% !important;
+			background: #fff;
+			padding: 10px;
+			border-radius:5px!important;
+	}
+	.smalldiv{
+		    height: 120px !important;		
+	}
+	
+	.horizontal{
+		   
+			border-top: solid 2px  #eee !important;
+			border-bottom: 0;
+	}
+	.form-actions{
+		    padding: 19px 0px 20px 0px;
+	}
+	
+	.portlet.box.blue-hoki > .portlet-title > .caption {
+		color: #F3565D;
+		
+    }
+	.portlet.box>.portlet-title>.caption {
+		padding: 13px 0 11px 18px !important;
+	}
+	.portlet.box.blue-hoki > .portlet-title {
+		background-color: #FFFFFF;
+		padding-left:0;
+		padding-right:0;
+	}
+	.table>tbody>tr>td{
+		color: #404040 !important;
+		font-size:14px;
+		
+	}
+	.table>thead>tr>th{
+		border-bottom: 1px solid #eee;
+		color: black;
+		font-weight:500;
+	}
+	.top-caption{
+		font-size:15px !important;
+	}
+	.caption{
+			font-size: 15px !important;
+	}
+	.actions img{padding-right: 10px; !important}
+	.actions a{
+		color:#F36161;
+	}
+	.portlet.box.blue-hoki{
+		border-radius:5%;
+	}
+	.blue-hoki{
+		overflow:hidden !important;
+		border-radius: 10px !important;
+	}
+	.fa {
+		padding:3px 10px; font-size: 18px;
+	}
+	.fa-pencil{
+		color:#A6A7A9 !important;
+		border-bottom: 1px solid;
+		padding: 2px;
+	}
+	.control-label{
+		font-weight:500 !important;
+		padding: 0px 0px 0px 42px;
+		
+	}
+	.input-icon{
+		padding:5px !important;
+	}
+	.modal-title{
+		font-size:17px;
+		text-align:center;
+	}
+	.modal-content{
+		padding: 20px 50px;
+	}
+	.modal-footer .btn{
+		padding :8px 20px !important;
+	}
+	.modal-header{
+		padding:15px;
+	}
+	.modal-footer{
+		padding:15px;
+		text-align:center;
+	}
+	.modal-header{
+		border-bottom:0px solid #EFEFEF !important;
+	}
+	.main-div{
+		padding-right:15px !important ;
+		padding-left:15px !important ;
+	}
+	.help-block-error{
+		color: #a94442;
+	}
+    #filtersubmit {
+    position: relative;
+    z-index: 1;
+    left: -40px;
+    top: 1px;
+    color: #7B7B7B;
+    cursor:pointer;
+    width: 0;
+	}	
+	.pointer{
+		cursor: pointer;
+	}
+	
+	
+	.table-str>tbody>tr:nth-child(even){
+		background-color: #f7f7f7; !important;
+	}
+	.table-str>thead>tr>th{
+		font-size: 13px !important;
+	}
+	.table-str>tbody>tr>td{
+		font-size: 13px !important;
+	}
