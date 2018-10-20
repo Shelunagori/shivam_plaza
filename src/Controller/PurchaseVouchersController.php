@@ -27,9 +27,12 @@ class PurchaseVouchersController extends AppController
         $vendor_id = $this->request->query('vendor_id');
         if(!empty($vendor_id)){
             $where['PurchaseVouchers.vendor_id LIKE']=$vendor_id;
+            $Vendor = $this->PurchaseVouchers->Vendors->get($vendor_id);
+        }else{
+            $where=[];
         }
 
-        $Vendor = $this->PurchaseVouchers->Vendors->get($vendor_id);
+        
 
         $this->paginate = [
             'contain' => ['Vendors']
