@@ -88,15 +88,19 @@ class BillsController extends AppController
 		$this->viewBuilder()->layout('');
 		$bill_id=$this->request->query('bill-id');
 		
-        $bill = $this->Bills->get($bill_id, [
+/*         $bill = $this->Bills->get($bill_id, [
             'contain' => ['BillRows'=>['Items'], 'Customers', 'Tables'=>['Employees']]
-        ]);
+        ]);  */
 
+        $bill = $this->Bills->get($bill_id, [
+            'contain' => ['BillRows'=>['Items'], 'Customers', 'Employees']
+        ]); 		
+		
+		
         $Kot = $this->Bills->Kots->find()->where(['Kots.bill_id' => $bill_id])->first();
         $kot_no = $Kot->voucher_no;
-
         $BillSetting = $this->Bills->BillSettings->get(1);
-
+		//pr($bill->toArray());exit;
         $this->set('bill', $bill);
         $this->set('kot_no', $kot_no);
         $this->set('BillSetting', $BillSetting);

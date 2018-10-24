@@ -9,11 +9,11 @@
 				<div>
 					<?php echo $BillSetting->header; ?>
 				</div>
-				<div style="border-top: solid 1px #807e7e; border-bottom: solid 1px #807e7e; padding: 0px 0px; line-height: 16px; font-size: 11px;">
+				<div style="border-top: solid 1px #807e7e; border-bottom: solid 1px #807e7e; padding: 0px 0px; line-height: 16px; font-size: 10px;">
 					<span style="color: #606062;">Name: </span><span style="margin-left: 10px;"> <?= h(@$bill->customer->name) ?> </span><br/>
 					<span style="color: #606062;">Mobile No: </span><span style="margin-left: 10px;"> <?= h(@$bill->customer->mobile_no) ?> </span>
 				</div>	
-				<div style=" border-bottom: solid 1px #807e7e; padding: 0; line-height: 18px;font-size: 11px;">
+				<div style=" border-bottom: solid 1px #807e7e; padding: 0; line-height: 18px;font-size: 10px;">
 					<table width="100%">
 						<tr>
 							<td>
@@ -46,8 +46,17 @@
 								<span style="color: #606062;">KOT No.: </span>
 								<span style="margin-left: 10px;"> <?php echo $kot_no; ?> </span>
 							</td>
+							
+							<td align="right">
+								<?php if(@$bill->employee->name){ ?>
+								<span style="color: #606062;">Caption: </span>
+								<span style="margin-left: 10px;"> <?= h(@$bill->employee->name) ?> </span>
+								<?php } ?>
+							</td>
+							
+							
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td>
 								<?php if($bill->table_id>0 ){?>
 								<span style="color: #606062;">Table No.: </span>
@@ -55,12 +64,12 @@
 								<?php } ?>
 							</td>
 							<td align="right">
-								<?php if(@$bill->table->employee->name){ ?>
-								<span style="color: #606062;">Steward: </span>
-								<span style="margin-left: 10px;"> <?= h(@$bill->table->employee->name) ?> </span>
+								<?php if(@$bill->employee->name){ ?>
+								<span style="color: #606062;">Caption: </span>
+								<span style="margin-left: 10px;"> <?= h(@$bill->employee->name) ?> </span>
 								<?php } ?>
 							</td>
-						</tr>
+						</tr> -->
 					</table>
 				</div>				
 

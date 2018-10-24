@@ -27,8 +27,9 @@ class UsersController extends AppController
             $user = $this->Auth->identify();
             if ($user) 
 			{
-				$user=$this->Users->get($user['id']);
-                $this->Auth->setUser($user);
+				$user = $this->Users->find()->contain(['Employees'])->where(['Users.id' =>$user['id']])->first();
+				//$user=$this->Users->get($user['id'])->contain(['Employees']);
+				$this->Auth->setUser($user);
                
                 return $this->redirect(['controller'=>'Users','action' => 'Dashboard']);
                 			
@@ -276,9 +277,10 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
 
-        $users = $this->Users->find();
-
-        $this->set(compact('users', 'user', 'id'));
+        $users = $this->Users->find()->contain(['Employees']);
+		//$Designations = $this->Users->Designations->find('list', ['keyField' => 'name','valueField' => 'name'])->where(['is_deleted'=>0]);
+        $employees = $this->Users->Employees->find('list')->where(['is_deleted'=>0]);
+		$this->set(compact('users', 'user', 'id','employees'));
     }
 
     /**

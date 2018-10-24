@@ -71,8 +71,9 @@ class AppController extends Controller
         ]);
 		
 		
-        $coreVariable = [
-            'user_name' => $this->Auth->User('name'),
+		$coreVariable = [
+			'designation_id' => $this->Auth->User('employee.designation_id'),
+            'user_name' => $this->Auth->User('employee.name'),
             'role' => $this->Auth->User('role'), 
             'company_name' => 'Dosa Plaza', 
             'company_address' => '100 Feet Road, Shobhagpura, Udaipur, Rajasthan 313001', 
