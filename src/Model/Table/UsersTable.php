@@ -41,6 +41,8 @@ class UsersTable extends Table
         $this->belongsTo('Customers');
         $this->belongsTo('Attendances');
         $this->belongsTo('Bookings');
+		$this->belongsTo('Designations');
+		$this->belongsTo('Employees');
         
     }
 
@@ -56,12 +58,12 @@ class UsersTable extends Table
             ->integer('id')
             ->allowEmpty('id', 'create');
 
-        $validator
+     /*    $validator
             ->scalar('name')
             ->maxLength('name', 100)
             ->requirePresence('name', 'create')
             ->notEmpty('name');
-
+ */
         $validator
             ->scalar('username')
             ->maxLength('username', 255)
