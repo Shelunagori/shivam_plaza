@@ -23,22 +23,7 @@
             <div class="portlet-body">
                 <div class="">
                     <?= $this->Form->create($user,['id'=>'CountryForm']) ?>
-                        
-						<div class="form-group">
-							<label class="control-label col-md-4"> Employee <span class="required" name="dName" >
-							 *</span>
-							</label>
-							<div class="col-md-8">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $this->Form->input('employee_id',['options' =>$employees,'label' => false,'class'=>'form-control select2me','empty'=> 'Select...','required'=>'required', 'value'=>$user->employee_id]);?>
-								</div>
-							</div>
-						</div>
-						
-						
-						
-						<!-- <div class="form-group">
+                        <div class="form-group">
                             <label class="control-label col-md-4">Name  <span class="required"> * </span>
                             </span>
                             </label>
@@ -48,32 +33,31 @@
                                     <input type="text" <?php if(!empty($id)){ echo "value='".$user->name."'"; } ?> name="name" class="form-control" Placeholder="Name">
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-4">Username  <span class="required"> * </span>
+                            <label class="control-label col-md-4">username  <span class="required"> * </span>
                             </span>
                             </label>
                             <div class="col-md-8">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
-                                    <input type="text" <?php if(!empty($id)){ echo "value='".$user->username."'"; } ?> name="username" class="form-control" Placeholder="Username" required="required">
+                                    <input type="text" <?php if(!empty($id)){ echo "value='".$user->username."'"; } ?> name="username" class="form-control" Placeholder="username" required="required">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-4">Password  <span class="required"> * </span>
+                            <label class="control-label col-md-4">password  <span class="required"> * </span>
                             </span>
                             </label>
                             <div class="col-md-8">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
-                                    <input type="password" name="password" class="form-control" Placeholder="Password" required="required">
+                                    <input type="password" name="password" class="form-control" Placeholder="password" required="required">
                                 </div>
                             </div>
                         </div>
-						
                         <div class="form-actions ">
                             <div class="row">
                                 <div class="col-md-12" style=" text-align: center;">
@@ -107,17 +91,14 @@
                         <tr>
                             <th scope="col"><?= ('Name') ?></th>
                             <th scope="col"><?= ('username') ?></th>
-							<th scope="col"><?= ('Role') ?></th>
                             <th scope="col" class="actions"><?= __('Actions') ?></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
-						foreach ($users as $user): ?>
+                        <?php foreach ($users as $user): ?>
                         <tr>
-                            <td><?= h($user->employee->name) ?></td>
+                            <td><?= h($user->name) ?></td>
                             <td><?= h($user->username) ?></td>
-							<td><?= h($user->role) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('Edit'), ['action' => 'index', $user->id]) ?>
                             </td>
@@ -136,8 +117,6 @@
 <!-- BEGIN PAGE LEVEL PLUGINS -->
     <!-- BEGIN VALIDATEION -->
     <?php echo $this->Html->script('/assets/global/plugins/jquery-validation/js/jquery.validate.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-	<?php echo $this->Html->css('/assets/global/plugins/select2/select2.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
-	<?php echo $this->Html->script('/assets/global/plugins/select2/select2.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
     <!-- END VALIDATEION --> 
 <!-- END PAGE LEVEL SCRIPTS -->
 

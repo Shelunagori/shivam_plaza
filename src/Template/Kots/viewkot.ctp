@@ -3,7 +3,7 @@
 	<head>
 		<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
 	</head>
-	<body style="margin: 0; font-family: 'Poppins', sans-serif; font-size: 10px;" onload="window.prinst();">
+	<body style="margin: 0; font-family: 'Poppins', sans-serif; font-size: 12px;" onload="window.prinst();">
 		<div style="width: 300px;">
 			<div style=" padding: 5px; " id='DivIdToPrint'>
 
