@@ -4,9 +4,29 @@
     <div class="col-md-12 main-div">
         <div class="portlet box blue-hoki">
             <div class="portlet-title">
-                <div class="caption"style="padding:13px; color: red;">
+                <div class="caption" style="padding:13px; color: red;">
                     Manual Stock
                 </div>
+				
+				<?php if($designation_id == 4) {  ?>
+				
+				<div align="center" class="caption" style="margin-left: 250px;">
+					<form method="GET">
+					<table>
+						<tr>
+							<td>
+								<input type="date" class="form-control" name="stock_date" value="<?php echo $date; ?>"	required />
+							</td>
+							<td>
+								<button type="submit" style="background-color: #FA6775;color: #FFF;" class="btn" >GO</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+				</div>
+				<?php } ?>
+				
+				
                 <div class="actions" style="margin-right: 10px;">
                     <input id="search3"  class="form-control" type="text" placeholder="Search" style="float: right;">
                 </div>
@@ -16,7 +36,60 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <form method="POST">
+                <?php if($designation_id == 4) { ?>
+					<div class="portlet-body"  id="ExcelPage">
+						<form method="POST">
+							<div class="table-scrollable">
+								<table class="table table-bordered table-stripped" >
+									<tr>
+									   <th rowspan="2">Item</th>
+									   <th rowspan="2">Unit</th>
+										<?php
+										
+										$oneDate = strtotime('-1 day',strtotime($date));
+										$date = date ('Y-m-j',$oneDate);														
+										
+										$firstDate = strtotime('-10 day',strtotime($date));
+										$firstDate = date ('Y-m-j',$firstDate);										
+										$lastDate = $date;
+										
+										function getDatesFromRange($start, $end) {
+											$interval = new DateInterval('P1D'); // PT5M 5 min 
+											$realEnd = new DateTime($end);
+											$realEnd->add($interval);
+											$period = new DatePeriod(
+												 new DateTime($start),
+												 $interval,
+												 $realEnd
+											);
+											foreach($period as $date) { 
+												$array[] = $date->format('Y-m-d'); 
+											}
+										 
+											return $array;
+										}
+										$datesData = getDatesFromRange($firstDate,$lastDate);
+										foreach($datesData as $dates)
+										{
+											echo '<th style="white-space: nowrap;text-align:center;" colspan="2" >'.date('d-m-Y', strtotime($dates)).'</th>';
+										}
+										  ?>
+										
+									</tr>
+									<tr>
+										<?php
+										foreach($datesData as $dates) {
+											echo '<th>Physical</th><th>Computer</th>';
+										}  ?>
+									   
+								   </tr>
+								</table>
+							</div>
+						</form>
+					</div>
+				<?php } else { ?>
+
+				<form method="POST">
                     <label id="CurrentDate">Date</label>
                     <input name="date" class="form-control" type="text" value="<?php echo date('d-m-Y'); ?>" readonly="readonly" style="width: 150px;">
                     <table class="table table-condensed table-hover" cellpadding="0" cellspacing="0" id="main_table">
@@ -55,11 +128,14 @@
                         <button type="submit" class="btn btn-danger">Submit</button>
                     </div>
                 </form>
-                
+				<?php } ?>
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 <?php
     $js="
@@ -95,3 +171,5 @@
     ";
 echo $this->Html->scriptBlock($js, array('block' => 'scriptBottom')); 
 ?>
+
+

@@ -21,8 +21,18 @@ class ManualStocksController extends AppController
     public function index()
     {
         $this->viewBuilder()->layout('admin');
+		$designation_id =  $this->Auth->User('employee.designation_id');
+        
+		$date = $this->request->query('stock_date');
+		
+		if(!empty($date))
+		{
+		}else
+		{
+			$date = date('Y-m-d');
+		}
 
-        $date = date('Y-m-d');
+		
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             
@@ -40,37 +50,86 @@ class ManualStocksController extends AppController
             }
         }
 
-        $data=[];
-        $ManualStocks = $this->ManualStocks->find()->where(['ManualStocks.transaction_date' => $date]);
-        foreach ($ManualStocks as $ManualStock) {
-            $data[$ManualStock->raw_material_id] = $ManualStock->physical;
-        }
-        
-        
-        $q=$this->ManualStocks->RawMaterials->StockLedgers->find()->where(['StockLedgers.raw_material_id = RawMaterials.id', 'StockLedgers.status' => 'in']);
-        $q->select([$q->func()->sum('StockLedgers.quantity')]);
-        
-        $q2=$this->ManualStocks->RawMaterials->StockLedgers->find()->where(['StockLedgers.raw_material_id = RawMaterials.id', 'StockLedgers.status' => 'out']);
-        $q2->select([$q2->func()->sum('StockLedgers.quantity')]);
+        $data=[]; $RawMaterials=[];
 
-        $q3=$this->ManualStocks->RawMaterials->StockLedgers->find()
-            ->where(['StockLedgers.raw_material_id = RawMaterials.id', 'StockLedgers.status' => 'in', 'StockLedgers.purchase_voucher_id >' => '0'])
-            ->order(['StockLedgers.transaction_date' => 'DESC'])
-            ->limit(1);
-        $q3->select(['StockLedgers.transaction_date']);
-        
-        $RawMaterials = $this->ManualStocks->RawMaterials->find();
-        $RawMaterials->select([
-            'total_in' => $q,
-            'total_out' => $q2,
-            'last_purchase' => $q3
-        ])
-        ->contain(['PrimaryUnits', 'RawMaterialSubCategories'])
-        ->where(['RawMaterials.is_deleted'=>0])
-        ->order(['RawMaterialSubCategories.Name' => 'ASC'])
-        ->autoFields(true);
 
-        $this->set(compact('RawMaterials', 'data'));
+		if($designation_id == 4)
+		{
+			$oneDate = strtotime('-1 day',strtotime($date));
+			$date = date ('Y-m-j',$oneDate);														
+			$firstDate = strtotime('-10 day',strtotime($date));
+			$firstDate = date ('Y-m-j',$firstDate);										
+			$lastDate = $date;
+			
+			
+			$ManualStocks = $this->ManualStocks->find()
+			->where(['ManualStocks.transaction_date >='=>date('Y-m-d',strtotime($firstDate)),'ManualStocks.transaction_date <='=>date('Y-m-d',strtotime($lastDate))]);
+			foreach ($ManualStocks as $ManualStock) {
+				$data[$ManualStock->raw_material_id] = $ManualStock->physical;
+			}			
+			
+			
+			$q=$this->ManualStocks->RawMaterials->StockLedgers->find()->where(['StockLedgers.raw_material_id = RawMaterials.id', 'StockLedgers.status' => 'in']);
+			$q->select([$q->func()->sum('StockLedgers.quantity')]);
+			
+			$q2=$this->ManualStocks->RawMaterials->StockLedgers->find()->where(['StockLedgers.raw_material_id = RawMaterials.id', 'StockLedgers.status' => 'out']);
+			$q2->select([$q2->func()->sum('StockLedgers.quantity')]);
+
+			$q3=$this->ManualStocks->RawMaterials->StockLedgers->find()
+				->where(['StockLedgers.raw_material_id = RawMaterials.id', 'StockLedgers.status' => 'in', 'StockLedgers.purchase_voucher_id >' => '0'])
+				->order(['StockLedgers.transaction_date' => 'DESC'])
+				->limit(1);
+			$q3->select(['StockLedgers.transaction_date']);
+			
+			$RawMaterials = $this->ManualStocks->RawMaterials->find();
+			$RawMaterials->select([
+				'total_in' => $q,
+				'total_out' => $q2,
+				'last_purchase' => $q3
+			])
+			->contain(['PrimaryUnits', 'RawMaterialSubCategories'])
+			->where(['RawMaterials.is_deleted'=>0])
+			->order(['RawMaterialSubCategories.Name' => 'ASC'])
+			->autoFields(true);	
+
+			pr($RawMaterials->toArray());exit;
+			
+		}
+		else
+		{
+			$ManualStocks = $this->ManualStocks->find()->where(['ManualStocks.transaction_date' => $date]);
+			foreach ($ManualStocks as $ManualStock) {
+				$data[$ManualStock->raw_material_id] = $ManualStock->physical;
+			}			
+			
+			$q=$this->ManualStocks->RawMaterials->StockLedgers->find()->where(['StockLedgers.raw_material_id = RawMaterials.id', 'StockLedgers.status' => 'in']);
+			$q->select([$q->func()->sum('StockLedgers.quantity')]);
+			
+			$q2=$this->ManualStocks->RawMaterials->StockLedgers->find()->where(['StockLedgers.raw_material_id = RawMaterials.id', 'StockLedgers.status' => 'out']);
+			$q2->select([$q2->func()->sum('StockLedgers.quantity')]);
+
+			$q3=$this->ManualStocks->RawMaterials->StockLedgers->find()
+				->where(['StockLedgers.raw_material_id = RawMaterials.id', 'StockLedgers.status' => 'in', 'StockLedgers.purchase_voucher_id >' => '0'])
+				->order(['StockLedgers.transaction_date' => 'DESC'])
+				->limit(1);
+			$q3->select(['StockLedgers.transaction_date']);
+			
+			$RawMaterials = $this->ManualStocks->RawMaterials->find();
+			$RawMaterials->select([
+				'total_in' => $q,
+				'total_out' => $q2,
+				'last_purchase' => $q3
+			])
+			->contain(['PrimaryUnits', 'RawMaterialSubCategories'])
+			->where(['RawMaterials.is_deleted'=>0])
+			->order(['RawMaterialSubCategories.Name' => 'ASC'])
+			->autoFields(true);
+		}
+
+
+
+
+        $this->set(compact('RawMaterials', 'data','designation_id','date'));
     }
 
     /**
