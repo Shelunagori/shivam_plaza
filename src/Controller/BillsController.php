@@ -608,10 +608,10 @@ class BillsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $bill = $this->Bills->get($id);
         $this->Bills->BillRows->StockLedgers->deleteAll(['bill_id' => $bill->id]);
-        $this->Bills->BillRows->deleteAll(['bill_id' => $bill->id]);
-        if ($this->Bills->delete($bill)) {
+        $bill->is_deleted="yes";
+        if ($this->Bills->save($bill)) {
             $this->Flash->success(__('The bill has been canceled.'));
-        } else {
+        }else{
             $this->Flash->error(__('The bill could not be canceled. Please, try again.'));
         }
 
@@ -694,6 +694,7 @@ class BillsController extends AppController
         $this->set(compact('seturl'));
 
         $where=[];
+        $where['Bills.is_deleted']='no';
 
         $date_from_to = $this->request->query('date_from_to');
         $exploded_date_from_to = explode('/', $date_from_to);
@@ -778,10 +779,8 @@ class BillsController extends AppController
     public function salesReportExcel(){
         $this->viewBuilder()->layout('');
 
-        
-
-
         $where=[];
+        $where['Bills.is_deleted']='no';
 
         $date_from_to = $this->request->query('date_from_to');
         $exploded_date_from_to = explode('/', $date_from_to);
@@ -912,6 +911,7 @@ class BillsController extends AppController
         $this->set(compact('seturl'));
 
         $where=[];
+        $where['Bills.is_deleted']='no';
 
         $date_from_to = $this->request->query('date_from_to');
         $exploded_date_from_to = explode('/', $date_from_to);
@@ -943,6 +943,7 @@ class BillsController extends AppController
         $this->viewBuilder()->layout('');
 
         $where=[];
+        $where['Bills.is_deleted']='no';
 
         $date_from_to = $this->request->query('date_from_to');
         $exploded_date_from_to = explode('/', $date_from_to);
@@ -952,6 +953,75 @@ class BillsController extends AppController
             $where['Bills.transaction_date >=']=$from_date;
             $where['Bills.transaction_date <=']=$to_date;
         }
+
+       
+        $Bills = $this->Bills->find()
+                    ->where($where)
+                    ->autoFields(true)
+                    ->contain(['Tables', 'Employees', 'Customers', 'BillRows'=>['Items'] ]);
+        
+
+        $q=$this->Bills->find()->where($where);
+        $q->select([$q->func()->sum('Bills.grand_total')]);
+
+        $Total_grand_total = $this->Bills->find()->select(['Total_grand_total' => $q ])->first();
+
+        
+
+        $this->set(compact('exploded_date_from_to', 'Bills', 'Total_grand_total'));
+    }
+
+    public function billWiseSalesDelete(){
+        $this->viewBuilder()->layout('admin');
+
+        $urls=$this->request->here();
+        $seturl=explode('?',$urls);
+        $this->set(compact('seturl'));
+
+        $where=[];
+        $where['Bills.is_deleted']='no';
+
+        $date_from_to = $this->request->query('date_from_to');
+        $exploded_date_from_to = explode('/', $date_from_to);
+        $from_date = date('Y-m-d', strtotime($exploded_date_from_to[0]));
+        $to_date = date('Y-m-d', strtotime($exploded_date_from_to[1]));
+        if(!empty($date_from_to)){
+            $where['Bills.transaction_date >=']=$from_date;
+            $where['Bills.transaction_date <=']=$to_date;
+        }
+        $where['Bills.is_deleted']='yes';
+
+       
+        $Bills = $this->Bills->find()
+                    ->where($where)
+                    ->autoFields(true)
+                    ->contain(['Tables', 'Employees', 'Customers', 'BillRows'=>['Items'] ]);
+        
+
+        $q=$this->Bills->find()->where($where);
+        $q->select([$q->func()->sum('Bills.grand_total')]);
+
+        $Total_grand_total = $this->Bills->find()->select(['Total_grand_total' => $q ])->first();
+
+        
+
+        $this->set(compact('exploded_date_from_to', 'Bills', 'Total_grand_total'));
+    }
+
+    public function billWiseSalesDeleteExcel(){
+        $this->viewBuilder()->layout('');
+
+        $where=[];
+
+        $date_from_to = $this->request->query('date_from_to');
+        $exploded_date_from_to = explode('/', $date_from_to);
+        $from_date = date('Y-m-d', strtotime($exploded_date_from_to[0]));
+        $to_date = date('Y-m-d', strtotime($exploded_date_from_to[1]));
+        if(!empty($date_from_to)){
+            $where['Bills.transaction_date >=']=$from_date;
+            $where['Bills.transaction_date <=']=$to_date;
+        }
+        $where['Bills.is_deleted']='yes'; 
 
        
         $Bills = $this->Bills->find()
@@ -991,7 +1061,7 @@ class BillsController extends AppController
             'Hourly_bill' => $Bills->func()->count('id'),
             'hour' => 'HOUR(created_on)'
         ])
-        ->where(['Bills.transaction_date' => $date1])
+        ->where(['Bills.transaction_date' => $date1, 'Bills.is_deleted' => 'no'])
         ->group(['HOUR(created_on)'])
         ->order(['Bills.created_on' => 'ASC']);
 
@@ -1049,11 +1119,13 @@ class BillsController extends AppController
         }
 
 
-        // $TotalAmount = $this->Bills->BillRows->find()->Where(['BillRows.bill_id = Bills.id']);
-        // $TotalAmount->select([$TotalAmount->func()->sum('BillRows.amount')]);
+
 
         $BillRows   = $this->Bills->BillRows->find();
-        $BillRows->matching('Bills')->group(['Bills.transaction_date']);
+        $BillRows->matching('Bills', function($q){
+            return $q->where(['Bills.is_deleted' => 'no']);
+        })
+        ->group(['Bills.transaction_date']);
         $BillRows->select([
             'TotalAmount' => $BillRows->func()->sum('BillRows.amount'),
             'TotalDiscountAmount' => $BillRows->func()->sum('BillRows.discount_amount'),
@@ -1090,7 +1162,10 @@ class BillsController extends AppController
         // $TotalAmount->select([$TotalAmount->func()->sum('BillRows.amount')]);
 
         $BillRows   = $this->Bills->BillRows->find();
-        $BillRows->matching('Bills')->group(['Bills.transaction_date']);
+        $BillRows->matching('Bills', function($q){
+            return $q->where(['Bills.is_deleted' => 'no']);
+        })
+        ->group(['Bills.transaction_date']);
         $BillRows->select([
             'TotalAmount' => $BillRows->func()->sum('BillRows.amount'),
             'TotalDiscountAmount' => $BillRows->func()->sum('BillRows.discount_amount'),

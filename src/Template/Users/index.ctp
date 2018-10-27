@@ -37,20 +37,6 @@
 						</div>
 					   
 					   
-					   
-					   
-					   
-					   <!-- <div class="form-group">
-                            <label class="control-label col-md-4">Name  <span class="required"> * </span>
-                            </span>
-                            </label>
-                            <div class="col-md-8">
-                                <div class="input-icon right">
-                                    <i class="fa"></i>
-                                    <input type="text" <?php if(!empty($id)){ echo "value='".$user->name."'"; } ?> name="name" class="form-control" Placeholder="Name">
-                                </div>
-                            </div>
-                        </div> -->
 
                         <div class="form-group">
                             <label class="control-label col-md-4">Username  <span class="required"> * </span>
@@ -108,7 +94,7 @@
                         <tr>
                             <th scope="col"><?= ('Name') ?></th>
                             <th scope="col"><?= ('username') ?></th>
-							<th scope="col"><?= ('Role') ?></th>
+							<th scope="col"><?= ('Employee') ?></th>
                             <th scope="col" class="actions"><?= __('Actions') ?></th>
                         </tr>
                     </thead>
@@ -117,7 +103,7 @@
                         <tr>
                             <td><?= h($user->employee->name) ?></td>
                             <td><?= h($user->username) ?></td>
-							<td><?= h($user->role) ?></td>
+							<td><?= h($user->employee->name) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('Edit'), ['action' => 'index', $user->id]) ?>
                             </td>

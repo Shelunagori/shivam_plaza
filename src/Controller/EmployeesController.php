@@ -148,7 +148,8 @@ class EmployeesController extends AppController
         $EmpSales=$this->Employees->Bills->find()->where([
             'Bills.employee_id = Employees.id', 
             'Bills.transaction_date >=' => $from_date, 
-            'Bills.transaction_date <=' => $to_date
+            'Bills.transaction_date <=' => $to_date,
+            'Bills.is_deleted' => 'no'
         ]);
         $EmpSales->select([$EmpSales->func()->sum('Bills.grand_total')]);
 

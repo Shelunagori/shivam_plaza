@@ -149,13 +149,21 @@ class ItemsController extends AppController
 
         $BillRows=$this->Items->BillRows->find()->where(['BillRows.item_id = Items.id']);
         $BillRows->matching('Bills', function($q) use($from_date, $to_date){
-            return $q->where(['Bills.transaction_date >=' => $from_date, 'Bills.transaction_date <=' => $to_date]);
+            return $q->where([
+                'Bills.transaction_date >=' => $from_date,
+                'Bills.transaction_date <=' => $to_date,
+                'Bills.is_deleted' => 'no'
+            ]);
         });
         $BillRows->select([$BillRows->func()->sum('BillRows.quantity')]);
 
         $BillRows2=$this->Items->BillRows->find()->where(['BillRows.item_id = Items.id']);
         $BillRows2->matching('Bills', function($q) use($from_date, $to_date){
-            return $q->where(['Bills.transaction_date >=' => $from_date, 'Bills.transaction_date <=' => $to_date]);
+            return $q->where([
+                'Bills.transaction_date >=' => $from_date, 
+                'Bills.transaction_date <=' => $to_date,
+                'Bills.is_deleted' => 'no'
+            ]);
         });
         $BillRows2->select([$BillRows2->func()->sum('BillRows.net_amount')]);
 

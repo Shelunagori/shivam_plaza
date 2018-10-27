@@ -262,7 +262,7 @@ class UsersController extends AppController
         $this->viewBuilder()->layout('admin');
         if($id){
             $user = $this->Users->get($id, [
-                'contain' => []
+                'contain' => ['Employees']
             ]);
         }else{
             $user = $this->Users->newEntity();

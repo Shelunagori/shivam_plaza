@@ -597,7 +597,7 @@ class CustomersController extends AppController
         $Customer = $this->Customers->get($id);
 
          $Bills = $this->Customers->Bills->find()
-                    ->where(['Bills.customer_id' => $Customer->id])
+                    ->where(['Bills.customer_id' => $Customer->id, 'Bills.is_deleted' => 'no'])
                     ->autoFields(true)
                     ->contain(['Tables', 'Employees', 'BillRows'=>['Items'] ]);
 

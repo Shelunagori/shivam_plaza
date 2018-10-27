@@ -33,7 +33,7 @@
 
 				</div>
 				<div>
-					<b>Bill Wise Sales Report</b><br/>
+					<b>Current-Stock Report</b><br/>
 					<b>From <?php echo $exploded_date_from_to[0].' To '.$exploded_date_from_to[1]; ?></b>
 					<b style="float: right;"><?php echo date('d-m-Y H:i A'); ?></b>
 				</div>

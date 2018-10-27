@@ -527,7 +527,8 @@ class RawMaterialsController extends AppController
 		])
 		->where([
 			'Bills.transaction_date >=' => $from_date1[1].'-'.$from_date1[0].'-1', 
-			'Bills.transaction_date <=' => $tillDate
+			'Bills.transaction_date <=' => $tillDate,
+			'Bills.is_deleted' => 'no',
 		])
 		->group(['MONTH(Bills.transaction_date)', 'YEAR(Bills.transaction_date)'])
 		->order(['Bills.transaction_date' => 'ASC']);
@@ -595,6 +596,4 @@ class RawMaterialsController extends AppController
 
 		$this->set(compact('RawMaterials'));
 	}
-
-
 }

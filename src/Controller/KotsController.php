@@ -526,6 +526,7 @@ class KotsController extends AppController
         $to_date = date('Y-m-d', strtotime($exploded_date_from_to[1]));
 
         $emWhere=[];
+        $emWhere['Bills.is_deleted'] = 'no';
         $employee_id = $this->request->query('employee_id');
         if($employee_id){
             $emWhere['Bills.employee_id'] = $employee_id;
@@ -539,6 +540,11 @@ class KotsController extends AppController
                     'Kots.created_on >=' => $from_date.' 00:00:00',
                     'Kots.created_on <=' => $to_date.' 23:59:59',
                     'Kots.is_deleted' => 0
+                ])
+                ->orWhere([
+                    'Kots.created_on >=' => $from_date.' 00:00:00',
+                    'Kots.created_on <=' => $to_date.' 23:59:59',
+                    'Kots.is_deleted is null'
                 ])
                 ->contain([
                     'Tables',
@@ -560,7 +566,15 @@ class KotsController extends AppController
                 'Kots.created_on >=' => $from_date.' 00:00:00',
                 'Kots.created_on <=' => $to_date.' 23:59:59',
                 'Kots.is_deleted' => 0
+            ])
+            ->orWhere([
+                'Kots.created_on >=' => $from_date.' 00:00:00',
+                'Kots.created_on <=' => $to_date.' 23:59:59',
+                'Kots.is_deleted is null'
             ]);
+        })
+        ->matching('Kots.Bills', function($q) use($emWhere){
+            return $q->where($emWhere);
         })
         ->select([
             'Total_Kot_Amount' => $KotRows->func()->sum('amount'),

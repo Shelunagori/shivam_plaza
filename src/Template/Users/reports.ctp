@@ -53,6 +53,7 @@
 					echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Group + Item Wise Sales Report</span>', '/ItemCategories/Group-Item-Report',['escape' => false, 'class' => 'showLoader']).'</li>';
 					echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Hourly Sales Report</span>', '/Bills/hourly-Report',['escape' => false, 'class' => 'showLoader']).'</li>';
 					echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Steward Comparison Report</span>', '/Employees/comparison',['escape' => false, 'class' => 'showLoader']).'</li>';
+					echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Bill Delete Report</span>', '/Bills/bill-Wise-Sales-Delete',['escape' => false, 'class' => 'showLoader']).'</li>';
 					?>
 			 	</ul>
 				
