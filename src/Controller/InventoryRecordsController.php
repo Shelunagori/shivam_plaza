@@ -32,8 +32,10 @@ class InventoryRecordsController extends AppController
             $this->InventoryRecords->deleteAll(['transaction_date' => $date]);
 
             $projections = $this->request->data['projection'];
+            $adjustments = $this->request->data['adjustment'];
             $malls = $this->request->data['mall'];
             $roads = $this->request->data['road'];
+            $wastages = $this->request->data['wastage'];
             $closing_balances = $this->request->data['closing_balance'];
             $consumptions = $this->request->data['consumption'];
             $item_lists = $this->request->data['item_list'];
@@ -43,8 +45,10 @@ class InventoryRecordsController extends AppController
                 $inventoryRecord->transaction_date = $date;
                 $inventoryRecord->item_list_id = $item_lists[$key];
                 $inventoryRecord->projection = $projections[$key];
+                $inventoryRecord->adjustment = $adjustments[$key];
                 $inventoryRecord->mall = $malls[$key];
                 $inventoryRecord->road = $roads[$key];
+                $inventoryRecord->wastage = $wastages[$key];
                 $inventoryRecord->closing_balance = $closing_balances[$key];
                 $inventoryRecord->consumption = $consumptions[$key];
                 $this->InventoryRecords->save($inventoryRecord);
@@ -68,8 +72,10 @@ class InventoryRecordsController extends AppController
         $TodayOBData=[];
         foreach ($TodayInventoryRecords as $TodayInventoryRecord) {
             $TodayOBData[$TodayInventoryRecord->item_list->id]['projection']=$TodayInventoryRecord->projection;
+            $TodayOBData[$TodayInventoryRecord->item_list->id]['adjustment']=$TodayInventoryRecord->adjustment;
             $TodayOBData[$TodayInventoryRecord->item_list->id]['mall']=$TodayInventoryRecord->mall;
             $TodayOBData[$TodayInventoryRecord->item_list->id]['road']=$TodayInventoryRecord->road;
+            $TodayOBData[$TodayInventoryRecord->item_list->id]['wastage']=$TodayInventoryRecord->wastage;
             $TodayOBData[$TodayInventoryRecord->item_list->id]['closing_balance']=$TodayInventoryRecord->closing_balance;
             $TodayOBData[$TodayInventoryRecord->item_list->id]['consumption']=$TodayInventoryRecord->consumption;
         }
@@ -82,9 +88,13 @@ class InventoryRecordsController extends AppController
         foreach ($OldInventoryRecords as $OldInventoryRecord) {
             $OldData[strtotime($OldInventoryRecord->transaction_date)][$OldInventoryRecord->item_list->id]['projection']=$OldInventoryRecord->projection;
 
+            $OldData[strtotime($OldInventoryRecord->transaction_date)][$OldInventoryRecord->item_list->id]['adjustment']=$OldInventoryRecord->adjustment;
+
             $OldData[strtotime($OldInventoryRecord->transaction_date)][$OldInventoryRecord->item_list->id]['mall']=$OldInventoryRecord->mall;
 
             $OldData[strtotime($OldInventoryRecord->transaction_date)][$OldInventoryRecord->item_list->id]['road']=$OldInventoryRecord->road;
+            
+            $OldData[strtotime($OldInventoryRecord->transaction_date)][$OldInventoryRecord->item_list->id]['wastage']=$OldInventoryRecord->wastage;
 
             $OldData[strtotime($OldInventoryRecord->transaction_date)][$OldInventoryRecord->item_list->id]['closing_balance']=$OldInventoryRecord->closing_balance;
 
