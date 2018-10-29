@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('mystyle');    ?>
+<?php echo $this->Html->css('mystyle'); ?>
 <style type="text/css" media="print">
 @page {
     width:100%;

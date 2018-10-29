@@ -21,10 +21,13 @@ class VegetableRecordsController extends AppController
     public function index()
     {
         $this->viewBuilder()->layout('admin');
+
         $month = $this->request->query('month');
-		$month1 = explode('-', $month);
-		$firstDate = $month1[1].'-'.$month1[0].'-1';
+        $month1 = explode('-', $month);
+
+        $firstDate = $month1[1].'-'.$month1[0].'-1';
         $lastDate = date("Y-m-t", strtotime($firstDate));
+
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $vegetables = $this->request->data['vegetable'];
@@ -43,7 +46,8 @@ class VegetableRecordsController extends AppController
                         $VegetableRecord->amount = $amount;
                         $this->VegetableRecords->save($VegetableRecord);
                     }
-				}
+                    
+                }
             }
         }
 
@@ -56,12 +60,11 @@ class VegetableRecordsController extends AppController
         $VegetableRecords = $this->VegetableRecords->find()->where(['transaction_date >=' => $firstDate, 'transaction_date <=' => $lastDate]);
 
         $data=[]; $data2=[];
-		
-		
         foreach ($VegetableRecords as $VegetableRecord) {
             $data[$VegetableRecord->vegetable_id][strtotime($VegetableRecord->transaction_date)] = $VegetableRecord->amount;
             $data2[$VegetableRecord->vegetable_id][strtotime($VegetableRecord->transaction_date)] = $VegetableRecord->quantity;
         }
+
 
         $this->set(compact('Vegetables', 'month', 'month1', 'data', 'data2'));
     }
