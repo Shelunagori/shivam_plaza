@@ -92,7 +92,7 @@ class ManualStocksController extends AppController
 			->order(['RawMaterialSubCategories.Name' => 'ASC'])
 			->autoFields(true);	
 
-			pr($RawMaterials->toArray());exit;
+			//pr($RawMaterials->toArray());exit;
 			
 		}
 		else

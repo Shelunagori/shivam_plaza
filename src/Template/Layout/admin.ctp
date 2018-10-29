@@ -189,9 +189,7 @@
 							<i class="fa fa-angle-down"></i>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-default">
-								<li>
-									<?php echo '<li>'.$this->Html->link('Bill Setting', '/Bill-settings',['escape' => false]).'</li>'; ?>
-								</li>
+								
 								<li>
 									<?php echo '<li>'.$this->Html->link($this->Html->tag('i', '', ['class' => 'icon-lock']).'Log Out', '/Users/logout',['escape' => false]).'</li>'; ?>
 								</li>

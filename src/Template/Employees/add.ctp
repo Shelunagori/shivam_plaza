@@ -23,13 +23,6 @@
 					</div>
 				<?php } ?>
 				
-				
-				
-				<!-- <div class="tools">
-					<?php if(!empty($id)){ ?>
-						<?php echo $this->Html->link('<i class="fa fa-plus"></i> Add ','/Employees/add/',array('escape'=>false,'style'=>'color:#fff'));?>
-					<?php }?>
-				</div> -->
 				<div class="row">	
 						<div class="col-md-12 horizontal "></div>
 				</div>
@@ -103,7 +96,22 @@
 								</div>
 							</div>
 						</div>
-					</div>	
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<label>Username</label>
+							<?php
+							echo $this->Form->control('user.username',['class'=>'form-control','label'=>false, 'value' => $employee->user->username ]);
+							?>
+						</div>
+						<div class="col-md-6">
+							<label>Password</label>
+							<?php
+							echo $this->Form->control('user.password',['class'=>'form-control','label'=>false, 'value' =>'' ]);
+							?>
+						</div>
+					</div>
  						
 					<div class="form-actions ">
 						<div class="row">

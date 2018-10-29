@@ -34,18 +34,24 @@ class EmployeesController extends AppController
     public function add($id = null)
     {
 		$this->viewBuilder()->layout('admin');
-		if(!$id)
-		{
-			$employee = $this->Employees->newEntity();
+		if(!$id){
+			$employee = $this->Employees->newEntity($this->request->getData(), [
+                            'associated' => ['Users']
+                        ]);
 		}
 		else{
-			$employee = $this->Employees->get($id, [
-				'contain' => []
-			]);
+			$employee = $this->Employees->get(
+                            $id, 
+                            [
+                                'associated' => ['Users'],
+                                'contain' => ['Users']
+                            ]
+                        );
 		}
         if ($this->request->is(['patch', 'post', 'put'])) {
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
 
+            $employee->user->name=$employee->name;
             if ($this->Employees->save($employee)) {
                 $this->Flash->success(__('The employee has been saved.'));
 
