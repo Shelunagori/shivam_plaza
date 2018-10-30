@@ -7,7 +7,7 @@
 		<div class="portlet box blue-hoki">
 			<div class="portlet-title">
 				<div class="caption">
-					Purchases from <?= h($Vendor->name) ?>
+					Purchases <?php if($Vendor->name){ echo 'from'; } ?> <?= h($Vendor->name) ?>
 				</div>
 				<div class="tools"> 
  				</div>

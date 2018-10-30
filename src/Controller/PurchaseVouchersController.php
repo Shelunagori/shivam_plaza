@@ -69,7 +69,7 @@ class PurchaseVouchersController extends AppController
 		$this->viewBuilder()->layout('admin');
         $purchaseVoucher = $this->PurchaseVouchers->newEntity();
 		if ($this->request->is('post')) {
-			$purchaseVoucher = $this->PurchaseVouchers->patchEntity($purchaseVoucher, $this->request->getData()); 
+			$purchaseVoucher = $this->PurchaseVouchers->patchEntity($purchaseVoucher, $this->request->getData());
 			
             //Voucher Number Increment
             $last_voucher_no=$this->PurchaseVouchers->find()->select(['voucher_no'])->order(['voucher_no' => 'DESC'])->first();

@@ -463,9 +463,12 @@ class KotsController extends AppController
     public function deleteReport(){
         $this->viewBuilder()->layout('admin');
 
-        $from_date=$this->request->query('from_date');
+        $date_from_to = $this->request->query('date_from_to');
+        $exploded_date_from_to = explode('/', $date_from_to);
+        $from_date = date('Y-m-d', strtotime($exploded_date_from_to[0]));
+        $to_date = date('Y-m-d', strtotime($exploded_date_from_to[1]));
+
         $from_date1=date('Y-m-d', strtotime($from_date));
-        $to_date=$this->request->query('to_date');
         $to_date1=date('Y-m-d', strtotime($to_date));
 
         $deletedRows=$this->Kots->KotRows->find()
@@ -490,7 +493,7 @@ class KotsController extends AppController
                     } 
                 ])
                 ->autoFields(true);
-        $this->set(compact('Kots', 'from_date', 'to_date'));
+        $this->set(compact('Kots', 'from_date', 'to_date', 'exploded_date_from_to'));
     }
 
     public function deleteReportExcel(){
