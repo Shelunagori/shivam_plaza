@@ -51,9 +51,9 @@
 			$TOTAL_TAXABLE=0;
 			$TOTAL_DISCOUNT=0;
 			foreach ($Bills as $Bill): ?>
-				<tr>
-					<td>
-						<table width="100%" class=" qwerty2" cellpadding="0" cellspacing="0" style="margin-top: 20px;">
+				<tr row_no="<?php echo $Bill->id; ?>" class="firstRow" >
+					<td style="padding: 0;">
+						<table width="100%" class=" qwerty2" cellpadding="0" cellspacing="0" >
 							<tr>
 								<td>
 									<span>Bill No.</span> 
@@ -98,8 +98,6 @@
 										?>
 									</span>
 								</td>
-							</tr>
-							<tr>
 								<td>
 									<span>Table No.</span> 
 									<span style="margin-left: 10px;color: #313131;">
@@ -112,13 +110,16 @@
 										<?= h(@$Bill->employee->name) ?>
 									</span>
 								</td>
+								<td>
+									<button type="button" class="btn btn-xs viewBill">View Bill</button>
+								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
-				<tr class="main_tr">
+				<tr row_no="<?php echo $Bill->id; ?>" class="SecondRow" style="display: none;">
 					<td style="padding: 0;">
-					 	<table width="100%" class="table table-bordered qwerty3" style="margin: 0;" cellpadding="0" cellspacing="0">
+					 	<table width="100%" class="table table-condensed qwerty3" style="margin: 0;" cellpadding="0" cellspacing="0">
 					 		<tr>
 					 			<th>Item</th>
 					 			<th>Quantity</th>
@@ -223,4 +224,40 @@
 		</table>
 	</div>
 </div>
+<!-- BEGIN PAGE LEVEL STYLES -->
+<!-- BEGIN COMPONENTS DROPDOWNS -->
+    <?php echo $this->Html->css('/assets/global/plugins/bootstrap-select/bootstrap-select.min.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
+    <?php echo $this->Html->css('/assets/global/plugins/select2/select2.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
+    <?php echo $this->Html->css('/assets/global/plugins/jquery-multi-select/css/multi-select.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
+    <!-- END COMPONENTS DROPDOWNS -->
+<!-- BEGIN COMPONENTS DROPDOWNS -->
+    <?php echo $this->Html->script('/assets/global/plugins/bootstrap-select/bootstrap-select.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
+    <?php echo $this->Html->script('/assets/global/plugins/select2/select2.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
+    <?php echo $this->Html->script('/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
+    <!-- END COMPONENTS DROPDOWNS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+    <!-- BEGIN VALIDATEION -->
+    <?php echo $this->Html->script('/assets/global/plugins/jquery-validation/js/jquery.validate.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
+    <?php echo $this->Html->script('/assets/admin/pages/scripts/form-validation.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
+
+    <!-- END VALIDATEION --> 
+<!-- END PAGE LEVEL SCRIPTS -->
+
+<?php 
+$js="
+$(document).ready(function() {
+    $('.viewBill').die().live('click',function(event){
+    	var row_no = $(this).closest('tr.firstRow').attr('row_no');
+    	if($('.SecondRow[row_no='+row_no+']:visible').length){
+    		$(this).closest('tr.firstRow').css('background-color','#FFF');
+    		$('.SecondRow[row_no='+row_no+']').hide();
+		}else{
+			$(this).closest('tr.firstRow').css('background-color','#abb2ff');
+			$('.SecondRow[row_no='+row_no+']').show();
+		}
+    });
+});
+";
+?>
+<?php echo $this->Html->scriptBlock($js, array('block' => 'scriptBottom'));  ?>
 
