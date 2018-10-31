@@ -1,3 +1,11 @@
 INSERT INTO `pages` (`id`, `controller_name`, `action`, `name`) VALUES (NULL, 'ExpanseHeads', 'index', 'Expense Heads');
 
 ALTER TABLE `employees` CHANGE `salary` `salary` DECIMAL(10,2) NULL DEFAULT NULL;
+
+
+
+********30-10-2018
+********T1026	Vegitable Records - sort ASC by vegitable name
+new table vendor_amounts
+
+
