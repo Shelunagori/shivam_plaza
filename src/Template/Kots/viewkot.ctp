@@ -1,3 +1,4 @@
+
 <!DOCTYPE html> 
 <html>
 	<head>
@@ -5,7 +6,7 @@
 	</head>
 	<body style="margin: 0; font-family: 'Poppins', sans-serif; font-size: 10px;" onload="window.prinst();">
 		<div style="width: 300px;">
-			<div style=" padding: 5px; " id='DivIdToPrint'>
+			<div style="  padding: 5px 15px 5px 15px;  " id='DivIdToPrint'>
 
 				<div align="center" style="line-height: 24px;">
 					<?php if($Kots->table_id>0 ){?>
@@ -24,7 +25,7 @@
 					<?php } ?>
 				</div>
 
-				<div style=" border-bottom: solid 1px #CCC; padding: 13px 5px; line-height: 22px;">
+				<div style=" border-bottom: solid 1px; padding: 13px 5px; line-height: 14px;">
 					<table width="100%">
 						<tr>
 							<td>
@@ -32,12 +33,16 @@
 								<span style="margin-left: 10px;"> <?php echo $Kots->voucher_no; ?> </span>
 							</td>
 							<td align="right">
-								<span style="color: #606062;">KOT Date: </span>
-								<span style="margin-left: 10px;"> <?php echo $Kots->created_on->format('d-m-Y'); ?> </span>
+								<span style="color: #606062;">KOT Time: </span>
+								<span style="margin-left: 10px;"> <?php echo date('h:i A',strtotime($Kots->created_on)); ?> </span>
 							</td>
 						</tr>
 						<tr>
 							<td>
+								<span style="color: #606062;">KOT Date: </span>
+								<span style="margin-left: 10px;"> <?php echo $Kots->created_on->format('d-m-Y'); ?> </span>
+							</td>
+							<td align="right">
 								<span style="color: #606062;">Order Type: </span>
 								<span> 
 								<?php 
@@ -47,50 +52,56 @@
 								?>
 								</span>
 							</td>
-							<td align="right">
-								<span style="color: #606062;">KOT Time: </span>
-								<span style="margin-left: 10px;"> <?php echo date('h:i A',strtotime($Kots->created_on)); ?> </span>
-							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style="color: #606062;">Caption: </span>
-								<span style="margin-left: 10px;"> <?= h(@$Kots->bill->employee->name) ?></span>
-							</td>
-							<td align="right">
 								<span style="color: #606062;">Bill No.: </span>
 								<span style="margin-left: 10px;"> RBL-<?php echo str_pad($Kots->bill->voucher_no, 6, "0", STR_PAD_LEFT); ?></span>
+							</td>
+							<td align="right">
+								<span style="color: #606062;">Caption: </span>
+								<span style="margin-left: 10px;"> <?= h(@$Kots->bill->employee->name) ?></span>
 							</td>
 						</tr>
 					</table>
 				</div>	
 
-				<div style="border-top: solid 1px #807e7e; border-bottom: solid 1px #807e7e; padding: 0px 0px; line-height: 16px; font-size: 11px;">
-					<span style="color: #606062;">Name: </span><span style="margin-left: 10px;"> <?= h(@$Kots->bill->customer->name) ?> </span><br/>
-					<span style="color: #606062;">Mobile No: </span><span style="margin-left: 10px;"> <?= h(@$Kots->bill->customer->mobile_no) ?> </span>
+				<div style="border-bottom: solid 1px; padding: 0px 0px; line-height: 12px; font-size: 11px;">
+					<table width="100%">
+						<tr>
+							<td style="font-size: 13px;">
+								<span style="color: #606062;">Name: </span>
+								<span style="margin-left: 10px;"> <?= h(@$Kots->bill->customer->name) ?></span>
+							</td>
+							<td align="right">
+								<span style="color: #606062;">Mobile No: </span>
+								<span style="margin-left: 10px;"> <?= h(@$Kots->bill->customer->mobile_no) ?></span>
+							</td>
+						</tr>
+					</table>
 				</div>				
 
 				<table width="100%" id="billBox" style="line-height: 20px;padding: 0;margin: 0;">
 					<thead>
 						<tr>
-							<th style="border-bottom: solid 1px #CCC;">SR N.</th>
-							<th style="text-align:left;border-bottom: solid 1px #CCC;">Item Name</th>
-							<th style="text-align:center;border-bottom: solid 1px #CCC;">Qty</th> 
-							<th style="text-align:center;border-bottom: solid 1px #CCC;">Rate</th> 
+							<th style="border-bottom: solid 1px;width: 25px;">SR N.</th>
+							<th style="text-align:left;border-bottom: solid 1px;">Item Name</th>
+							<th style="text-align:center;border-bottom: solid 1px;">Qty</th> 
+							<th style="text-align:center;border-bottom: solid 1px;">Rate</th> 
 						</tr>
 					</thead>
-					<tbody>
+					<tbody style="line-height: 10px;">
 					<?php 
 					$i=0; $sub_total=0; $discountAmount=0;
 					foreach($Kots->kot_rows as $bill_row){
 						$sub_total+=$bill_row->net_amount;
 						$discountAmount+=$bill_row->amount*$bill_row->discount_per/100;
 						?>
-						<tr>
-							<td style="padding-top: 5px;text-align: center;"><?php echo ++$i; ?></td>
-							<td style="padding-top: 5px;"><?php echo $bill_row->item->name; ?></td>
-							<td style="text-align:center;padding-top: 5px;" ><?php echo $bill_row->quantity; ?></td> 
-							<td style="text-align:center;padding-top: 5px;" ><?php echo $bill_row->rate; ?></td> 
+						<tr style="font-size: 12px;">
+							<td style="padding: 0;text-align: center;"><?php echo ++$i; ?></td>
+							<td style="padding: 0;"><?php echo $bill_row->item->name; ?></td>
+							<td style="padding: 0;text-align:center;" ><?php echo $bill_row->quantity; ?></td> 
+							<td style="padding: 0;text-align:center;" ><?php echo $bill_row->rate; ?></td> 
 						</tr>
 						<?php if($bill_row->item_comment){ ?>
 						<tr>
@@ -105,7 +116,7 @@
 						<?php } ?>
 					<?php } ?>
 					<tr>
-						<td style="border-top: solid 1px #CCC;" colspan="4">
+						<td style="border-top: solid 1px;" colspan="4">
 							<span style="color: #606062;">Over All Comments: </span>
 						</td>
 					</tr>
@@ -132,4 +143,8 @@
 		</style>
 	</body>
 </html>
+<script type="text/javascript">
+	window.print();
+	window.close();
+</script>
 

@@ -140,7 +140,7 @@ if(!empty(count(array_intersect($userPages, $target)))){
 				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Bill List</span>', '/Bills/index',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
 			if (in_array("19", $userPages)){ 
-				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Customers</span>', '/Customers/index',['escape' => false, 'class' => 'showLoader']).'</li>';
+				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Customer List</span>', '/Customers/index',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
 			?>
 	 	</ul>

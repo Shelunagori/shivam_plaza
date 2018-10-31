@@ -935,14 +935,20 @@ $order=$pass[1];
 
 				var url='".$this->Url->build(['controller'=>'Kots','action'=>'viewkot'])."';
 				url=url+'/'+response.kot_id;
-				var win = window.open(url, '_blank');
+				var win = window.open(url, '_blank', 'shilpijain', 'modal=no');
+
+				//var mywindow = window.open(url, 'title', 'height=500,width=500');   
+    			//mywindow.onload = function() { mywindow.print(); mywindow.close(); }
+
 
 				var url='".$this->Url->build(['controller'=>'Bills','action'=>'view'])."';
 				url=url+'?bill-id='+response.bill_id;
-				var win = window.open(url, '_blank');
+				var win = window.open(url, '_blank', 'shilpijain', 'modal=no');
+
+				//var mywindow2 = window.open(url, 'title2', 'height=500,width=500');   
+    			//mywindow2.onload = function() { mywindow2.print(); mywindow2.close(); }
 
 				location.reload();
-				
 			});
 		});
 		

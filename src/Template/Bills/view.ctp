@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -10,25 +11,25 @@
 					<?php echo $BillSetting->header; ?>
 				</div>
 				<div style="border-top: solid 1px #807e7e; border-bottom: solid 1px #807e7e; padding: 0px 0px; line-height: 16px; font-size: 10px;">
-					<span style="color: #606062;">Name: </span><span style="margin-left: 10px;"> <?= h(@$bill->customer->name) ?> </span><br/>
-					<span style="color: #606062;">Mobile No: </span><span style="margin-left: 10px;"> <?= h(@$bill->customer->mobile_no) ?> </span>
+					<table width="100%">
+						<tr>
+							<td>
+								<span style="color: #606062;">Name: </span>
+								<span style="margin-left: 10px;"> <?= h(@$bill->customer->name) ?> </span>
+							</td>
+							<td align="right">
+								<span style="color: #606062;">Mobile No: </span>
+								<span style="margin-left: 10px;"> <?= h(@$bill->customer->mobile_no) ?> </span>
+							</td>
+						</tr>
+					</table>
 				</div>	
-				<div style=" border-bottom: solid 1px #807e7e; padding: 0; line-height: 18px;font-size: 10px;">
+				<div style=" border-bottom: solid 1px #807e7e; padding: 0; line-height: 14px;font-size: 10px;">
 					<table width="100%">
 						<tr>
 							<td>
 								<span style="color: #606062;">Bill No.: </span>
 								<span style="margin-left: 10px;"> RBL-<?php echo str_pad($bill->voucher_no, 6, "0", STR_PAD_LEFT); ?> </span>
-							</td>
-							<td align="right">
-								<span style="color: #606062;">Bill Date: </span>
-								<span style="margin-left: 10px;"> <?php echo $bill->created_on->format('d-m-Y'); ?> </span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span style="color: #606062;">Bill Time: </span>
-								<span style="margin-left: 10px;"> <?php echo date('h:i A',strtotime($bill->created_on)); ?> </span>
 							</td>
 							<td align="right">
 								<span style="color: #606062;">Order Type: </span>
@@ -39,6 +40,16 @@
 									if($bill->order_type=='delivery'){ echo "Delivery";} 
 									?>
 								</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span style="color: #606062;">Bill Date: </span>
+								<span style="margin-left: 10px;"> <?php echo $bill->created_on->format('d-m-Y'); ?> </span>
+							</td>
+							<td align="right">
+								<span style="color: #606062;">Bill Time: </span>
+								<span style="margin-left: 10px;"> <?php echo date('h:i A',strtotime($bill->created_on)); ?> </span>
 							</td>
 						</tr>
 						<tr>
@@ -152,4 +163,7 @@
 		</style>
 	</body>
 </html>
-
+<script type="text/javascript">
+	window.print();
+	window.close();
+</script>
