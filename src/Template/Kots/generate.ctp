@@ -422,7 +422,7 @@ $order=$pass[1];
 											<tr>
 												<td colspan="2" height="35px">
 													<?php
-													echo $this->Form->input('employee_id',['options'=>$Employees,'class'=>'form-control input-sm select2 employee_id','empty' => '--Select Captain--','label'=>false,'required'=>'required','value'=>@$employee_id,'id'=>'employee_id']);
+													echo $this->Form->input('employee_id',['options'=>$Employees,'class'=>'form-control input-sm select2 employee_id','label'=>false,'required'=>'required','value'=>@$employee_id,'id'=>'employee_id']);
 													?>
 												</td>
 											</tr>
