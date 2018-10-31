@@ -63,7 +63,8 @@ class VegetableRecordsController extends AppController
             'VegetableRates' => function($q) use($month1){
                 return $q->where(['VegetableRates.month' => $month1[0], 'VegetableRates.year' => $month1[1] ]);
             }
-            ]);
+            ])
+        ->order(['Vegetables.name' => 'ASC']);
 
         $VegetableRecords = $this->VegetableRecords->find()->where(['transaction_date >=' => $firstDate, 'transaction_date <=' => $lastDate]);
 
