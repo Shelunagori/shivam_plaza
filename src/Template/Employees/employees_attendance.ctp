@@ -116,12 +116,12 @@
 										$show_Lable='Present';
 									}
 									if($status==2){
-										$total_AB++;
-										$show_Lable='Absent';
-									}
-									if($status==3){
 										$total_HD++;
 										$show_Lable='Half Day';
+									}
+									if($status==3){
+										$total_AB++;
+										$show_Lable='Absent';
 									}
 									if($status==4){
 										$total_O++;
@@ -155,7 +155,8 @@
 										$ExtraSalary = ($total_F*2) * $OneHourSalary;	
 									}
 									
-									echo $ActualSalary = $salary - $amountToBeDeduct + $ExtraSalary;
+									$ActualSalary = $salary - $amountToBeDeduct + $ExtraSalary;
+									echo round($ActualSalary,2);
 									?>
 								</th>
 							</tr>

@@ -69,8 +69,8 @@
 											['value' => '1', 'text' => 'Present'],
 											['value' => '2', 'text' => 'Half Day'],
 											['value' => '3', 'text' => 'Absent'],
-											['value' => '5', 'text' => 'Full'],
-											['value' => '4', 'text' => 'Off']
+											['value' => '4', 'text' => 'Off'],
+											['value' => '5', 'text' => 'Full']
 										],
 										['value' => @$employee->attendances[0]->attendance_status, 'class' => 'allCheckbox']
 									); ?>

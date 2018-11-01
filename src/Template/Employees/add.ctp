@@ -102,7 +102,7 @@
 						<div class="col-md-6">
 							<label>Username</label>
 							<?php
-							echo $this->Form->control('user.username',['class'=>'form-control','label'=>false, 'value' => $employee->user->username ]);
+							echo $this->Form->control('user.username',['class'=>'form-control','label'=>false, 'value' => $employee->user->username]);
 							?>
 						</div>
 						<div class="col-md-6">
