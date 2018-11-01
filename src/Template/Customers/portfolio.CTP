@@ -44,6 +44,16 @@
 <div style="background-color: white;border: solid 1px #CCC;overflow:  auto;margin: 10px;padding: 10px">
 	<div class="table-scrollable" >
 		<table class="table table-bordered qwerty" cellpadding="0" cellspacing="0">
+			<tr>
+				<th>Bill No</th>
+				<th>Bill Date</th>
+				<th>No. of Pax</th>
+				<th>Time Taken</th>
+				<th>Order Type</th>
+				<th>Table No</th>
+				<th>Steward</th>
+				<th></th>
+			</tr>
 			<?php 
 			$TOTAL_SALE=0;
 			$TOTAL_CGST=0;
@@ -52,73 +62,46 @@
 			$TOTAL_DISCOUNT=0;
 			foreach ($Bills as $Bill): ?>
 				<tr row_no="<?php echo $Bill->id; ?>" class="firstRow" >
-					<td style="padding: 0;">
-						<table width="100%" class=" qwerty2" cellpadding="0" cellspacing="0" >
-							<tr>
-								<td>
-									<span>Bill No.</span> 
-									<span style="margin-left: 10px;color: #313131;">
-										<?= h($Bill->voucher_no) ?>
-									</span>
-								</td>
-								<td>
-									<span>Bill Date</span> 
-									<span style="margin-left: 10px;color: #313131;">
-										<?php echo date('d-m-Y', strtotime($Bill->transaction_date)); ?>
-										<?php echo date(' H:i A', strtotime($Bill->created_on)); ?>
-									</span>
-								</td>
-								<td>
-									<span>No. of Pax</span> 
-									<span style="margin-left: 10px;color: #313131;">
-										<?= h($Bill->no_of_pax) ?>
-									</span>
-								</td>
-								<td>
-									<span>Time Taken</span> 
-									<span style="margin-left: 10px;color: #313131;">
-										<?php 
-										$Bill->occupied_time->format('Y-m-d H:i:s').'<br/>';
-										$Bill->created_on->format('Y-m-d H:i:s').'<br/>';
-										$datetime1 = new DateTime($Bill->occupied_time->format('Y-m-d H:i:s'));//start time
-										$datetime2 = new DateTime($Bill->created_on->format('Y-m-d H:i:s'));//end time
-										$interval = $datetime1->diff($datetime2);
-										echo $time    = $interval->format('%h')*60+$interval->format('%i') .' min ';
-										echo $interval->format('%s sec');
-										?>
-									</span>
-								</td>
-								<td>
-									<span>Order Type</span> 
-									<span style="margin-left: 10px;color: #313131;">
-										<?php 
-										if($Bill->order_type=='dinner'){ echo "Dine In";} 
-										if($Bill->order_type=='takeaway'){ echo "Take Away";} 
-										if($Bill->order_type=='delivery'){ echo "Delivery";} 
-										?>
-									</span>
-								</td>
-								<td>
-									<span>Table No.</span> 
-									<span style="margin-left: 10px;color: #313131;">
-										<?= h(@$Bill->table->name) ?>
-									</span>
-								</td>
-								<td>
-									<span>Steward</span> 
-									<span style="margin-left: 10px;color: #313131;">
-										<?= h(@$Bill->employee->name) ?>
-									</span>
-								</td>
-								<td>
-									<button type="button" class="btn btn-xs viewBill">View Bill</button>
-								</td>
-							</tr>
-						</table>
+					<td>
+						RBL-<?php echo str_pad($Bill->voucher_no, 6, "0", STR_PAD_LEFT); ?>		
+					</td>
+					<td>
+						<?php echo date('d-m-Y', strtotime($Bill->transaction_date)); ?>
+						<?php echo date(' H:i A', strtotime($Bill->created_on)); ?>
+					</td>
+					<td>
+						<?= h($Bill->no_of_pax) ?>
+					</td>
+					<td>
+						<?php 
+						$Bill->occupied_time->format('Y-m-d H:i:s').'<br/>';
+						$Bill->created_on->format('Y-m-d H:i:s').'<br/>';
+						$datetime1 = new DateTime($Bill->occupied_time->format('Y-m-d H:i:s'));//start time
+						$datetime2 = new DateTime($Bill->created_on->format('Y-m-d H:i:s'));//end time
+						$interval = $datetime1->diff($datetime2);
+						echo $time    = $interval->format('%h')*60+$interval->format('%i') .' min ';
+						echo $interval->format('%s sec');
+						?>
+					</td>
+					<td>
+						<?php 
+						if($Bill->order_type=='dinner'){ echo "Dine In";} 
+						if($Bill->order_type=='takeaway'){ echo "Take Away";} 
+						if($Bill->order_type=='delivery'){ echo "Delivery";} 
+						?>
+					</td>
+					<td>
+						<?= h(@$Bill->table->name) ?>
+					</td>
+					<td>
+						<?= h(@$Bill->employee->name) ?>
+					</td>
+					<td>
+						<button type="button" class="btn btn-xs viewBill">View Bill</button>
 					</td>
 				</tr>
 				<tr row_no="<?php echo $Bill->id; ?>" class="SecondRow" style="display: none;">
-					<td style="padding: 0;">
+					<td style="padding: 0;" colspan="8">
 					 	<table width="100%" class="table table-condensed qwerty3" style="margin: 0;" cellpadding="0" cellspacing="0">
 					 		<tr>
 					 			<th>Item</th>
@@ -203,7 +186,7 @@
 				<?php endforeach; ?>
 				<tfoot>
 					<tr>
-						<td style="text-align: right;">
+						<td style="text-align: right;" colspan="8">
 							<span>TOTAL DISCOUNT</span>
 							<span style="margin-left: 5px; margin-right: 20px;"><b><?php echo @$TOTAL_DISCOUNT; ?></b></span>
 
