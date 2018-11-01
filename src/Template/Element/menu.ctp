@@ -5,7 +5,7 @@ if (in_array("1", $userPages)){
 ?>
 
 <?php 
-$target=array("6","7","9","10","11","13","43");
+$target=array("6","7","9","43");
 if(!empty(count(array_intersect($userPages, $target)))){
 ?>
 	<li class="start">
@@ -24,15 +24,6 @@ if(!empty(count(array_intersect($userPages, $target)))){
 			if (in_array("9", $userPages)){
 				echo '<li>'.$this->Html->link('<span class="title" style="margin-left: 15px;">Item Master</span>', '/Items/index',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
-			if (in_array("10", $userPages)){
-				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">RM Category</span>', '/RawMaterialCategories/add',['escape' => false, 'class' => 'showLoader']).'</li>';
-			}
-			if (in_array("11", $userPages)){
-				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">RM Sub-Category</span>', '/RawMaterialSubCategories/add',['escape' => false, 'class' => 'showLoader']).'</li>';
-			}
-			if (in_array("13", $userPages)){
-				echo '<li>'.$this->Html->link('<span class="title" style="margin-left: 15px;">RM Master</span>', '/RawMaterials/index',['escape' => false, 'class' => 'showLoader']).'</li>';
-			}
 			if (in_array("43", $userPages)){
 				echo '<li>'.$this->Html->link('<span class="title" style="margin-left: 15px;">Bill Setting</span>', '/Bill-settings',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
@@ -42,7 +33,7 @@ if(!empty(count(array_intersect($userPages, $target)))){
 <?php } ?>
 
 <?php 
-$target=array("21","22","23","24","25");
+$target=array("21","22","24","25");
 if(!empty(count(array_intersect($userPages, $target)))){
 ?>
 	<li class="start">
@@ -58,9 +49,6 @@ if(!empty(count(array_intersect($userPages, $target)))){
 			if (in_array("22", $userPages)){
 				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Tables</span>', '/Tables/add',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
-			if (in_array("23", $userPages)){
-				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Designations</span>', '/Designations/add',['escape' => false, 'class' => 'showLoader']).'</li>';
-			}
 			if (in_array("24", $userPages)){
 				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Tax</span>', '/Taxes/add',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
@@ -73,7 +61,7 @@ if(!empty(count(array_intersect($userPages, $target)))){
 <?php } ?>
 
 <?php 
-$target=array("29","18");
+$target=array("29","18","10","11","13");
 if(!empty(count(array_intersect($userPages, $target)))){
 ?>
 	<li class="start">
@@ -89,13 +77,22 @@ if(!empty(count(array_intersect($userPages, $target)))){
 			if (in_array("18", $userPages)){
 				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Vendors</span>', '/Vendors',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
+			if (in_array("10", $userPages)){
+				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">RM Category</span>', '/RawMaterialCategories/add',['escape' => false, 'class' => 'showLoader']).'</li>';
+			}
+			if (in_array("11", $userPages)){
+				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">RM Sub-Category</span>', '/RawMaterialSubCategories/add',['escape' => false, 'class' => 'showLoader']).'</li>';
+			}
+			if (in_array("13", $userPages)){
+				echo '<li>'.$this->Html->link('<span class="title" style="margin-left: 15px;">RM Master</span>', '/RawMaterials/index',['escape' => false, 'class' => 'showLoader']).'</li>';
+			}
 			?>
 	 	</ul>
 	</li>
 <?php } ?>
 
 <?php 
-$target=array("5","16","28");
+$target=array("5","16","28","23");
 if(!empty(count(array_intersect($userPages, $target)))){
 ?>
 	<li class="start">
@@ -113,6 +110,9 @@ if(!empty(count(array_intersect($userPages, $target)))){
 			}
 			if (in_array("28", $userPages)){
 				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Permissions</span>', '/UserRights/add',['escape' => false, 'class' => 'showLoader']).'</li>';
+			}
+			if (in_array("23", $userPages)){
+				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Designations</span>', '/Designations/add',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
 			?>
 	 	</ul>
