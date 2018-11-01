@@ -24,7 +24,9 @@ class VegetablesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.vegetables'
+        'app.vegetables',
+        'app.vegetable_records',
+        'app.vegetable_rates'
     ];
 
     /**
