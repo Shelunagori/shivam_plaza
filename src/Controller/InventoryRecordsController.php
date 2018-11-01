@@ -125,8 +125,10 @@ class InventoryRecordsController extends AppController
         $InventoryRecords = $this->InventoryRecords->find();
         $InventoryRecords->select([
             'total_projection' => $InventoryRecords->func()->sum('InventoryRecords.projection'),
+            'total_adjustment' => $InventoryRecords->func()->sum('InventoryRecords.adjustment'),
             'total_mall' => $InventoryRecords->func()->sum('InventoryRecords.mall'),
             'total_road' => $InventoryRecords->func()->sum('InventoryRecords.road'),
+            'total_wastage' => $InventoryRecords->func()->sum('InventoryRecords.wastage'),
             'total_consumption' => $InventoryRecords->func()->sum('InventoryRecords.consumption')
         ])
         ->where([
