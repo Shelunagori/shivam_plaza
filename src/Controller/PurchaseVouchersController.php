@@ -28,8 +28,15 @@ class PurchaseVouchersController extends AppController
         if(!empty($vendor_id)){
             $where['PurchaseVouchers.vendor_id LIKE']=$vendor_id;
             $Vendor = $this->PurchaseVouchers->Vendors->get($vendor_id);
-        }else{
-            $where=[];
+        }
+
+        $date_from_to = $this->request->query('date_from_to');
+        $exploded_date_from_to = explode('/', $date_from_to);
+        $from_date = date('Y-m-d', strtotime($exploded_date_from_to[0]));
+        $to_date = date('Y-m-d', strtotime($exploded_date_from_to[1]));
+        if(!empty($date_from_to)){
+            $where['PurchaseVouchers.transaction_date >=']=$from_date;
+            $where['PurchaseVouchers.transaction_date <=']=$to_date;
         }
 
         
@@ -39,7 +46,9 @@ class PurchaseVouchersController extends AppController
         ];
         $purchaseVouchers = $this->paginate($this->PurchaseVouchers->find()->where($where));
 
-        $this->set(compact('purchaseVouchers', 'Vendor'));
+        $vendors= $this->PurchaseVouchers->vendors->find('list');
+
+        $this->set(compact('purchaseVouchers', 'Vendor', 'vendors', 'vendor_id', 'exploded_date_from_to'));
     }
 
     /**
