@@ -100,6 +100,8 @@
 									}
 								}
 								?>
+
+								<?= $this->Html->link('Copy', '/Items/add/'.$country->id.'/copy', ['class'=>'btn btn-xs blue']) ?>
 							    
 							</td>
 						</tr>

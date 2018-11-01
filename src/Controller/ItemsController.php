@@ -19,7 +19,7 @@ class ItemsController extends AppController
 		$this->set(compact('itemslist'));
 	}
 
-    public function add($id = null)
+    public function add($id = null, $copy=null)
     {
 		$this->viewBuilder()->layout('admin');
 		if(!$id)
@@ -28,12 +28,15 @@ class ItemsController extends AppController
 		}
 		else
 		{
-			$item = $this->Items->get($id, [
-				'contain' => ['ItemRows']
-			]);
+            $item = $this->Items->get($id, [
+                    'contain' => ['ItemRows']
+                ]);
 		}
 		$loginId=$this->Auth->User('id'); 
         if ($this->request->is(['patch', 'post', 'put'])) {
+             if($copy=="copy"){
+                $item = $this->Items->newEntity();
+            }
             $item = $this->Items->patchEntity($item, $this->request->getData());
 			$item->created_by=$loginId;
 			$item->rate=$this->request->getData('rate'); 
@@ -45,7 +48,7 @@ class ItemsController extends AppController
             }
             $this->Flash->error(__('The item could not be saved. Please, try again.'));
         }
-		if($id)
+		if($id && $copy!="copy")
         {
             $itemSubCategories = $this->Items->ItemSubCategories->find('list', ['limit' => 200])
                 ->where(['is_deleted'=>0])
@@ -61,7 +64,7 @@ class ItemsController extends AppController
         
         $Taxes = $this->Items->Taxes->find('list', ['limit' => 200])->order(['Taxes.id'=>'ASC']);
         
-        if($id)
+        if($id && $copy!="copy")
         {  
             $itemslist=array();
             foreach($item->item_rows as $raw_materials){
