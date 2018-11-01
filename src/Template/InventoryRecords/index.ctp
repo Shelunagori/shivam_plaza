@@ -65,7 +65,7 @@
                          <th>Purchase</th>
                          <th>Manual adjustment</th>
                          <th>Mall</th>
-                         <th>100 F. Road</th>
+                         <th>SS</th>
                          <th>Wastage</th>
                          <th>Cls. Balance</th>
                          <th>Consumption</th>
@@ -116,7 +116,7 @@
                                <th>Purchase</th>
                                <th>Manual adjustment</th>
                                <th>Mall</th>
-                               <th>100 F. Road</th>
+                               <th>SS</th>
                                <th>Wastage</th>
                                <th>Cls. Balance</th>
                                <th>Consumption</th>
