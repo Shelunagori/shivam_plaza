@@ -51,10 +51,10 @@
 			</div>
 			<br>
 			<?php if($month){ 
-				$F_date=$month.'-01';
-				$first_date=date('Y-m-d',strtotime($F_date));
-				$last_date=date('Y-m-t',strtotime($F_date));
-
+				$month1=explode('-', $month);
+		        $F_date=$month1[1].'-'.$month1[0].'-01';
+		        $first_date=date('Y-m-d',strtotime($F_date));
+		        $last_date=date('Y-m-t',strtotime($F_date));
 			?>
 			<div class="portlet-body"  id="ExcelPage">
 				<div align="center">
