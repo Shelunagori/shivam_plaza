@@ -42,6 +42,9 @@
 </div>
 
 <div style="background-color: white;border: solid 1px #CCC;overflow:  auto;margin: 10px;padding: 10px">
+	<div class="pull-right">
+		<input id="search3"  class="form-control" type="text" placeholder="Search" >
+	</div>
 	<div class="table-scrollable" >
 		<table class="table table-bordered qwerty" cellpadding="0" cellspacing="0">
 			<tr>
@@ -239,6 +242,23 @@ $(document).ready(function() {
 			$('.SecondRow[row_no='+row_no+']').show();
 		}
     });
+
+    var rows = $('.qwerty tr.firstRow');
+    $('#search3').on('keyup',function() {
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+        var v = $(this).val();
+        
+        if(v){
+            rows.show().filter(function() {
+                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+    
+                return !~text.indexOf(val);
+            }).hide();
+        }else{
+            rows.show();
+        }
+    }); 
+
 });
 ";
 ?>
