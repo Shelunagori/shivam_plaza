@@ -477,16 +477,17 @@ class KotsController extends AppController
                     'deleted_rows' => $deletedRows
                 ])
                 ->where([
-                    'created_on >=' => $from_date1.' 00:00:00',
-                    'created_on <=' => $to_date1.' 23:59:59'
+                    'Kots.created_on >=' => $from_date1.' 00:00:00',
+                    'Kots.created_on <=' => $to_date1.' 23:59:59'
                 ])
                 ->contain([
-                    'Tables',
+                    'Tables', 'Bills.Employees',
                     'KotRows'=> function($q){
                         return $q->where(['KotRows.is_deleted' => 1])->contain(['Items']);
                     } 
                 ])
                 ->autoFields(true);
+        
         $this->set(compact('Kots', 'from_date', 'to_date', 'exploded_date_from_to'));
     }
 

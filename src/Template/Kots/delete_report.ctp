@@ -76,6 +76,7 @@
 							<tr>
 								<th style="text-align: center;">S.No.</th>
 								<th style="text-align: center;">KOT No.</th>
+								<th style="text-align: center;">Captain</th>
 								<th style="text-align: center;">Table</th>
 								<th style="text-align: center;">Created on</th>
 								<th style="text-align: center;">Details</th>
@@ -87,6 +88,7 @@
 							<tr class="main_tr">
 								<td style="text-align: center;"><?= (++$x) ?></td>
 								<td style="text-align: center;"><?= h($Kot->voucher_no) ?></td>
+								<td style="text-align: center;"><?= h($Kot->bill->employee->name) ?></td>
 								<td style="text-align: center;"><?= h(@$Kot->table->name) ?></td>
 								<td style="text-align: center;"><?= h($Kot->created_on->format('d-m-Y h:i A')) ?></td>
 								<td style="padding: 0;">
