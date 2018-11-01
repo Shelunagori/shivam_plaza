@@ -30,6 +30,11 @@
                             </div>
                         </td>
                         <td width="20%">
+                          <?php
+                            if (in_array("46", $userPages)){
+                                echo $this->Html->link('Daily Inventory Item Master ', '/ItemLists',['escape' => false, 'class' => 'btn btn-danger showLoader']);
+                            }
+                          ?>
                         </td>
                     </tr>
                 </table>
