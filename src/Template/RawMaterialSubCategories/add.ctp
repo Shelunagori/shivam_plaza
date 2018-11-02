@@ -93,10 +93,10 @@
                             <td class="actions">
                                  <?php
                                     if($country->is_deleted==0){
-                                     echo $this->Html->image('edit.png',['url'=>['controller'=>'RawMaterialSubCategories','action'=>'add',$country->id],'class'=>'tooltips showLoader','data-original-title'=>'Edit Category','data-container'=>'body']);?>
-                                    <?php echo $this->Html->image('lock.png',['data-target'=>'#deletemodal'.$country->id,'data-toggle'=>'modal','class'=>'tooltips','data-original-title'=>'Freeze Category','data-container'=>'body']);
-                                    } else { ?>
-                                        <?php echo $this->Html->image('unlock.png',['data-target'=>'#undeletemodal'.$country->id,'data-toggle'=>'modal','class'=>'tooltips','data-original-title'=>'Unfreeze Category','data-container'=>'body']);
+                                    echo $this->Html->link('Edit ', '/RawMaterialSubCategories/add/'.$country->id, ['class' => 'btn btn-xs blue showLoader']);
+                                    echo $this->Html->link('Freeze ', '#', ['data-target'=>'#deletemodal'.$country->id,'data-toggle'=>'modal','class'=>'btn btn-xs red','data-container'=>'body']);
+                                    } else {
+                                        echo $this->Html->link('Unfreeze ', '#', ['data-target'=>'#undeletemodal'.$country->id,'data-toggle'=>'modal','class'=>'btn btn-xs red','data-container'=>'body']);
                                     }
                                     ?>
                                 <div id="deletemodal<?php echo $country->id; ?>" class="modal fade" role="dialog">

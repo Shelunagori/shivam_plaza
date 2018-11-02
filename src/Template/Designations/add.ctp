@@ -80,7 +80,9 @@
 							<td><?= ++$x; ?></td> 
 							<td><?= h($country->name) ?></td>
 							<td class="actions">
-								<?php echo $this->Html->image('edit.png',['url'=>['controller'=>'designations','action'=>'add',$country->id],'class'=>'tooltips showLoader','data-original-title'=>'Edit Category','data-container'=>'body']);?>
+								<?php 
+								echo $this->Html->link('Edit ', '/designations/add/'.$country->id, ['class' => 'btn btn-xs blue showLoader']);
+								?>
 							</td>
 						</tr>
 						<?php endforeach; ?> 

@@ -74,8 +74,10 @@
 							<td><?= ++$x; ?></td> 
 							<td><?= h($comment->comment) ?></td>
 							<td class="actions">
-								<?php echo $this->Html->link($this->Html->image('edit.png'),['controller'=>'Comments','action'=>'add',$comment->id], ['escape' => false, 'class' => 'showLoader']);?>
-								<?php echo $this->Html->image('delete.png',['data-target'=>'#deletemodal'.$comment->id,'data-toggle'=>'modal','class'=>'pointer']);?>
+								<?php 
+								echo $this->Html->link('Edit',['controller'=>'Comments','action'=>'add',$comment->id], ['escape' => false, 'class' => 'btn btn-xs blue showLoader']);
+								echo $this->Html->link('Delete ', '#', ['data-target'=>'#deletemodal'.$comment->id,'data-toggle'=>'modal','class'=>'btn btn-xs red']);
+								?>
 								<div id="deletemodal<?php echo $comment->id; ?>" class="modal fade " role="dialog">
 									<div class="modal-dialog modal-md" >
 										<form method="post" action="<?php echo $this->Url->build(array('controller'=>'Comments','action'=>'delete',$comment->id)) ?>">

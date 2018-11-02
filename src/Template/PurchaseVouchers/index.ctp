@@ -62,7 +62,9 @@
 							<td><?= h($purchaseVoucher->vendor->name) ?></td>
 							<td style="text-align: right;"><?= h($purchaseVoucher->grand_total) ?></td>
 							<td class="actions">
-								<?php echo $this->Html->link($this->Html->image('edit.png'),['controller'=>'purchaseVouchers','action'=>'edit',$purchaseVoucher->id], ['escape' => false, 'class' => 'showLoader']);?>
+								<?php 
+								echo $this->Html->link('Edit ', '/purchaseVouchers/edit/'.$purchaseVoucher->id, ['class' => 'btn btn-xs blue showLoader']);
+								?>
 							</td>
 						</tr>
 						<?php endforeach; ?>

@@ -18,7 +18,7 @@ class EmployeesController extends AppController
         $this->paginate = [
             'contain' => ['Designations']
         ];
-        $employees = $this->paginate($this->Employees->find()->where(['Employees.is_deleted'=>0]));
+        $employees = $this->Employees->find();
         $this->set(compact('employees'));
     }
  

@@ -23,6 +23,7 @@ class BillsController extends AppController
         $this->viewBuilder()->layout('admin');
 
         $where=[];
+         $where['Bills.is_deleted']='no';
 
         $bill_no=$this->request->query('bill_no');
         if(!empty($bill_no)){
@@ -607,6 +608,7 @@ class BillsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $bill = $this->Bills->get($id);
+
         $this->Bills->BillRows->StockLedgers->deleteAll(['bill_id' => $bill->id]);
         $bill->is_deleted="yes";
         if ($this->Bills->save($bill)) {

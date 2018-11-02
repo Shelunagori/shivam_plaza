@@ -99,11 +99,11 @@
                             <td><?= h(@$bill->table->name) ?></td>
                             <td class="actions">
                                 <?php
-                                    echo $this->Html->image('edit.png',['url'=>['controller'=>'Bills','action'=>'customerinfo',$bill->id],'class'=>'tooltips showLoader','data-original-title'=>'Edit Customer Info','data-container'=>'body']);
-                                    echo $this->Html->image('edit.png',['url'=>['controller'=>'Bills','action'=>'edit',$bill->id],'class'=>'tooltips showLoader','data-original-title'=>'Edit Bill','data-container'=>'body']);
-                                    echo $this->Html->image('print.png',['url'=>['controller'=>'Bills','action'=>'view?bill_id='.$bill->id],'target'=>'_blank','class'=>'tooltips ','data-original-title'=>'Re-Print','data-container'=>'body']);
+                                    echo $this->Html->link('Edit Customer Info ', '/Bills/customerinfo/'.$bill->id, ['class' => 'btn btn-xs blue showLoader']);
+                                    echo $this->Html->link('Edit Bill ', '/Bills/edit/'.$bill->id, ['class' => 'btn btn-xs blue showLoader']);
+                                    echo $this->Html->link('Re-Print ', '/Bills/view?bill-id='.$bill->id, ['class' => 'btn btn-xs blue showLoader','target'=>'_blank']);
 
-                                    echo $this->Html->image('delete.png',['data-target'=>'#deletemodal'.$bill->id,'data-toggle'=>'modal','class'=>'tooltips','data-original-title'=>'Delete Bill','data-container'=>'body']);
+                                    echo $this->Html->link('Delete ', '#', ['data-target'=>'#deletemodal'.$bill->id,'data-toggle'=>'modal','class'=>'btn btn-xs red','data-container'=>'body']);
                                     ?>
                                     <div id="deletemodal<?php echo $bill->id; ?>" class="modal fade" role="dialog">
                                         <div class="modal-dialog modal-md" >

@@ -80,7 +80,7 @@
                             <td><?= h($expanseHead->name) ?></td>
                             <td class="actions">
                                   <?php 
-                                  echo $this->Html->image('edit.png',['url'=>['controller'=>'ExpanseHeads','action'=>'index',$expanseHead->id],'class'=>'tooltips showLoader','data-original-title'=>'Edit Category','data-container'=>'body']);
+                                  echo $this->Html->link('Edit ', '/ExpanseHeads/index/'.$expanseHead->id, ['class' => 'btn btn-xs blue showLoader']);
                                   ?>
                             </td>
                         </tr>

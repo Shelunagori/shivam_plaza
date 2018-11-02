@@ -80,7 +80,9 @@
 							<td><?= ++$x; ?></td> 
 							<td><?= h($table->name) ?></td>
 							<td class="actions">
-								 <?php echo $this->Html->image('edit.png',['url'=>['controller'=>'Tables','action'=>'add',$table->id],'class'=>'tooltips showLoader','data-original-title'=>'Edit Category','data-container'=>'body','required'=>'required',]);?>
+								<?php 
+								echo $this->Html->link('Edit',['controller'=>'Tables','action'=>'add',$table->id], ['escape' => false, 'class' => 'btn btn-xs blue showLoader']);
+								?>
 							</td>
 						</tr>
 						<?php endforeach; ?> 
