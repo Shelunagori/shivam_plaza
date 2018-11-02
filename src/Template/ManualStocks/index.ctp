@@ -20,7 +20,7 @@
                     <label id="CurrentDate">Date</label>
                     <input name="date" class="form-control" type="text" value="<?php echo date('d-m-Y'); ?>" readonly="readonly" style="width: 150px;">
                     <div class="table-responsive">
-                        <table class="table table-condensed table-bordered table-hover" cellpadding="0" cellspacing="0" id="main_table">
+                        <table class="table table-condensed table-bordered " cellpadding="0" cellspacing="0" id="main_table">
                             <thead>
                                 <tr>
                                     <th style="width:10%" rowspan="2"><?= ('S.No.') ?></th>
@@ -36,7 +36,7 @@
                                         }
                                     }
                                     ?>
-                                    <th colspan="2" style="text-align: center;"><?php echo $date; ?></th>
+                                    <th colspan="2" style="text-align: center;"><?php echo date('d-m-Y', strtotime($date)); ?></th>
                                 </tr>
                                 <tr>
                                     <?php
@@ -44,14 +44,14 @@
                                         $start_date=$fromDate;
                                         $end_date=$toDate;
                                         while (strtotime($start_date) <= strtotime($end_date)) { ?>
-                                            <th style="width:15%" ><?= ('Physical') ?></th>
-                                            <th style="width:15%" ><?= ('Computer') ?></th>
+                                            <th style="width:15%"><?= ('Phy.') ?></th>
+                                            <th style="width:15%;"><?= ('Comp.') ?></th>
                                             <?php $start_date = date ("Y-m-d", strtotime("+1 day", strtotime($start_date)));
                                         }
                                     }
                                     ?>
-                                    <th style="width:15%" ><?= ('Physical') ?></th>
-                                    <th style="width:15%" ><?= ('Computer') ?></th>
+                                    <th style="width:15%"><?= ('Phy.') ?></th>
+                                    <th style="width:15%;"><?= ('Comp.') ?></th>
                                 </tr>
                             </thead>
                             <tbody id="main_tbody">
@@ -63,21 +63,23 @@
                                 </tr>
                                 <tr class="main_tr">
                                     <td><?= (++$d) ?></td>
-                                    <td><?= h($RawMaterial->name) ?></td>
+                                    <td style="white-space: nowrap;"><?= h($RawMaterial->name) ?></td>
                                     <td><?= h($RawMaterial->primary_unit->name) ?></td>
                                     <?php
                                     if($designation_id==4){
                                         $start_date=$fromDate;
                                         $end_date=$toDate;
                                         while (strtotime($start_date) <= strtotime($end_date)) { ?>
-                                            <td><?php echo $OldPhysical[strtotime($start_date)][$RawMaterial->id]; ?></td>
+                                            <td>
+                                                <input type="text" class="form-control input-sm" style="width: 50px;height: 20px;padding: 0;" name="old_physical[<?php echo strtotime($start_date); ?>][<?php echo $RawMaterial->id; ?>]" value="<?php echo @$OldPhysical[strtotime($start_date)][$RawMaterial->id]; ?>">
+                                            </td>
                                             <td><?php echo round($OldComputerData[strtotime($start_date)][$RawMaterial->id]); ?></td>
                                             <?php $start_date = date ("Y-m-d", strtotime("+1 day", strtotime($start_date)));
                                         }
                                     }
                                     ?>
                                     <td>
-                                        <input type="text" class="form-control input-sm" style="width: 100px;" name="physical[<?php echo $RawMaterial->id; ?>]" value="<?php echo @$data[$RawMaterial->id]; ?>">
+                                        <input type="text" class="form-control input-sm" style="width: 50px;height: 20px;padding: 0;" name="physical[<?php echo $RawMaterial->id; ?>]" value="<?php echo @$data[$RawMaterial->id]; ?>">
                                     </td>
                                     <td>
                                         <span class="current_stock" name ="quantity"><?= h($RawMaterial->total_in - $RawMaterial->total_out) ?></span> 

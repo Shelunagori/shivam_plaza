@@ -33,6 +33,17 @@ class ManualStocksController extends AppController
             $this->ManualStocks->deleteAll(['transaction_date' => $date]);
 
             $physicals = $this->request->data['physical'];
+            $old_physicals = $this->request->data['old_physical'];
+            
+            foreach ($old_physicals as $tdate => $value) {
+                foreach ($value as $rm_id => $qty) {
+                    $ManualStock = $this->ManualStocks->newEntity();
+                    $ManualStock->transaction_date = date('Y-m-d', $tdate);
+                    $ManualStock->raw_material_id = $rm_id;
+                    $ManualStock->physical = $qty;
+                    $this->ManualStocks->save($ManualStock);
+                }
+            }
 
             foreach ($physicals as $key => $physical) {
                 $ManualStock = $this->ManualStocks->newEntity();
@@ -114,7 +125,6 @@ class ManualStocksController extends AppController
         }
 
         $this->set(compact('RawMaterials', 'data','designation_id','date', 'fromDate', 'toDate', 'OldPhysical', 'OldComputerData', 'designation_id'));
-
     }
 
     /**
