@@ -32,6 +32,7 @@
 			</div>
 			<div class="portlet-body">
 				<?php if($PrintDate){ ?>
+				<input id="search3"  class="form-control input-small pull-right" type="text" placeholder="Search" >
 				<form method="post">
 					<table class="table table-bordered Attendance_list " cellpadding="0" cellspacing="0">
 						<thead>
@@ -55,7 +56,7 @@
 								<th scope="col">Remarks</th> 
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="main_tbody">
 							<?php $d=0; foreach ($employees as $employee){ ?>
 							
 							<tr>
@@ -135,6 +136,22 @@ $js="
 				$.uniform.update();
 			}
     	});
+
+    	var rows = $('#main_tbody tr');
+	    $('#search3').on('keyup',function() {
+	        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+	        var v = $(this).val();
+	        
+	        if(v){
+	            rows.show().filter(function() {
+	                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+	    
+	                return !~text.indexOf(val);
+	            }).hide();
+	        }else{
+	            rows.show();
+	        }
+	    }); 
     });
 ";
 $js.="

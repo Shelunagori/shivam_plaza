@@ -180,7 +180,7 @@
 
 $js="
 	$(document).ready(function() {	
-		var rows = $('#main_tbody tr.main_tr');
+		var rows = $('#main_tbody tr');
 		$('#search3').on('keyup',function() {
 	      
 			var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();

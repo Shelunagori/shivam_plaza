@@ -58,6 +58,7 @@
                      Expanse-Heads
                 </div>
                 <div class="tools"> 
+                    <input id="search3"  class="form-control" type="text" placeholder="Search" >
                 </div>
                 <div class="row">   
                         <div class="col-md-12 horizontal "></div>
@@ -72,7 +73,7 @@
                             <th scope="col" class="actions"><?= __('Actions') ?></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="main_tbody">
                         <?php $x=0; foreach ($expanseHeads as $expanseHead): ?>
                         <tr>
                             <td><?= ++$x; ?></td> 
@@ -150,7 +151,23 @@ $(document).ready(function() {
             
             form[0].submit(); // submit the form
         }
-    });     
+    });
+
+    var rows = $("#main_tbody tr");
+    $("#search3").on("keyup",function() {
+        var val = $.trim($(this).val()).replace(/ +/g, " ").toLowerCase();
+        var v = $(this).val();
+        
+        if(v){
+            rows.show().filter(function() {
+                var text = $(this).text().replace(/\s+/g, " ").toLowerCase();
+    
+                return !~text.indexOf(val);
+            }).hide();
+        }else{
+            rows.show();
+        }
+    });  
  });';
 ?>
 <?php echo $this->Html->scriptBlock($js, array('block' => 'scriptBottom'));  ?>
