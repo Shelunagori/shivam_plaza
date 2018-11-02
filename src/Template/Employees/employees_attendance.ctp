@@ -143,7 +143,7 @@
 								<th><?= ($total_AB+($total_HD/2)) ?></th>
 								<th>
 									<?php 
-									$salary = $employee->salary;
+									$salary = $employee->employee_salaries[0]->amount;
 									$oneDaySalary = $salary/30;
 									$amountToBeDeduct = ($total_AB+($total_HD/2)) * $oneDaySalary;
 

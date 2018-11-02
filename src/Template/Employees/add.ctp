@@ -75,6 +75,7 @@
 								</div>
 							</div>
 						</div>
+						<?php if(!$id){ ?>
 						<div class="form-group col-md-4">
 							<label class="control-label col-md-12"> Salary	</label>
 							<div class="col-md-12">
@@ -84,6 +85,30 @@
 								</div>
 							</div>
 						</div>
+						<?php } ?>
+					</div>
+					<div class="row">	
+						<?php if($id){ ?>
+						<div class="form-group col-md-4">
+							<label class="control-label col-md-12"> Salary	</label>
+							<div class="col-md-12">
+								<div class="input-icon right">
+									<i class="fa"></i>
+									<input type="text" value="<?php echo @$EmployeeSalary->amount; ?>" name="salary" id="salary" class="form-control" Placeholder="Salary" >
+									<input type="hidden" id="old_salary" value="<?php echo @$EmployeeSalary->amount; ?>" />
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-md-4">
+							<label class="control-label col-md-12"> Effective from	</label>
+							<div class="col-md-12">
+								<div class="input-icon right">
+									<i class="fa"></i>
+									<input type="text" name="effective_from" id="effective_from" class="form-control date-picker" Placeholder="Month" data-date-format="mm-yyyy" >
+								</div>
+							</div>
+						</div>
+						<?php } ?>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-10">
@@ -102,13 +127,13 @@
 						<div class="col-md-6">
 							<label>Username</label>
 							<?php
-							echo $this->Form->control('user.username',['class'=>'form-control','label'=>false, 'value' => $employee->user->username]);
+							echo $this->Form->control('user.username',['class'=>'form-control','label'=>false, 'value' => $employee->user->username, 'required'=>'false']);
 							?>
 						</div>
 						<div class="col-md-6">
 							<label>Password</label>
 							<?php
-							echo $this->Form->control('user.password',['class'=>'form-control','label'=>false, 'value' =>'' ]);
+							echo $this->Form->control('user.password',['class'=>'form-control','label'=>false, 'value' =>'', 'required'=>'false']);
 							?>
 						</div>
 					</div>
@@ -143,7 +168,8 @@
 	<!-- BEGIN VALIDATEION -->
 	<?php echo $this->Html->script('/assets/global/plugins/jquery-validation/js/jquery.validate.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
 	<?php echo $this->Html->script('/assets/admin/pages/scripts/form-validation.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-
+	<?php echo $this->Html->script('/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
+	<?php echo $this->Html->script('/assets/admin/pages/scripts/components-pickers.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
 	<!-- END VALIDATEION --> 
 <!-- END PAGE LEVEL SCRIPTS -->
 
@@ -212,8 +238,33 @@ $(document).ready(function() {
 			form[0].submit(); // submit the form
 		}
 	});
+
+	$('#salary').die().live('keyup',function(event){
+		var edited_salary=$(this).val();
+		var old_salary=$('#old_salary').val();
+		if(old_salary!=edited_salary){
+			 $('#effective_from').rules('add', 
+                    {
+                        required: true
+                    });
+		}else{
+			$('#effective_from').rules('add', 
+                    {
+                        required: false
+                    });
+		}
+	});
+
+
 });
 ";
+
+$js.="
+$(document).ready(function() {
+    ComponentsPickers.init();
+});
+";
+
 ?>
 <?php echo $this->Html->scriptBlock($js, array('block' => 'scriptBottom'));  ?>
 <style>

@@ -47,20 +47,61 @@ class EmployeesController extends AppController
                                 'contain' => ['Users']
                             ]
                         );
+            $EmployeeSalary=$this->Employees->EmployeeSalaries->find()->where(['employee_id'=>$employee->id])->order(['effective_from'=>'DESC'])->first();
 		}
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $employee = $this->Employees->patchEntity($employee, $this->request->getData());
+            $data=$this->request->getData();
+            if($id){
+                $username=$this->request->getData()['user']['username'];
+                $password=$this->request->getData()['user']['password'];
+                if(empty($username) or empty($password)){
+                    $employee = $this->Employees->get($id);
+                    $data=$this->request->getData();
+                    unset($data['user']);
+                }
+            }else{
+                $username=$this->request->getData()['user']['username'];
+                $password=$this->request->getData()['user']['password'];
+                if(empty($username) or empty($password)){
+                    $employee = $this->Employees->newEntity();
+                    $data=$this->request->getData();
+                    unset($data['user']);
+                }
+            }
+            
+            $employee = $this->Employees->patchEntity($employee, $data);
 
             $employee->user->name=$employee->name;
+
             if ($this->Employees->save($employee)) {
+                if(!$id){
+                    $EmployeeSalary = $this->Employees->EmployeeSalaries->newEntity();
+                    $EmployeeSalary->amount=$employee->salary;
+                    $EmployeeSalary->employee_id=$employee->id;
+                    $this->Employees->EmployeeSalaries->save($EmployeeSalary);
+                }else{
+                    if($employee->effective_from){
+                        //Delete
+                        $this->Employees->EmployeeSalaries->deleteAll([
+                            'employee_id' => $employee->id,
+                            'effective_from >=' => date('Y-m-d',strtotime('1-'.$employee->effective_from))
+                        ]);
+
+                        $EmployeeSalary = $this->Employees->EmployeeSalaries->newEntity();
+                        $EmployeeSalary->amount=$employee->salary;
+                        $EmployeeSalary->employee_id=$employee->id;
+                        $EmployeeSalary->effective_from=date('Y-m-d',strtotime('1-'.$employee->effective_from));
+                        $this->Employees->EmployeeSalaries->save($EmployeeSalary);
+                    }
+                }
                 $this->Flash->success(__('The employee has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The employee could not be saved. Please, try again.'));
         }
-        $Designations = $this->Employees->Designations->find('list', ['limit' => 200])->where(['is_deleted'=>0]);
-        $this->set(compact('employee','id','Designations'));
+        $Designations = $this->Employees->Designations->find('list')->where(['is_deleted'=>0]);
+        $this->set(compact('employee','id','Designations', 'EmployeeSalary'));
     }
       
     public function delete($id = null)
@@ -102,9 +143,15 @@ class EmployeesController extends AppController
         $F_date=$month1[1].'-'.$month1[0].'-01';
         $first_date=date('Y-m-d',strtotime($F_date));
         $last_date=date('Y-m-t',strtotime($F_date));
-        $Employees = $this->Employees->find()->contain(['Designations','Attendances'=>function($q)use($first_date,$last_date){
-            return $q->where(['Attendances.attendance_date >=' => $first_date,'Attendances.attendance_date <=' => $last_date]);
-        }]);
+        $Employees = $this->Employees->find()->contain([
+                        'Designations',
+                        'Attendances'=>function($q)use($first_date,$last_date){
+                            return $q->where(['Attendances.attendance_date >=' => $first_date,'Attendances.attendance_date <=' => $last_date]);
+                        },
+                        'EmployeeSalaries'=>function($q) use($first_date){
+                            return $q->order(['effective_from' => 'DESC'])->where(['effective_from <=' => $first_date]);
+                        }
+                    ]);
         $AttendancesArray=array();
         foreach ($Employees as $employee) {
             $employee_id=$employee->id;
