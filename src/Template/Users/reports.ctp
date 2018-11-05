@@ -142,6 +142,7 @@
 				<ul style=" line-height: 23px; ">
 					<?php
 					echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Monthly-Report</span>', '/RawMaterials/monthly-Report',['escape' => false, 'class' => 'showLoader']).'</li>';
+					echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Daily Sales and Inventory</span>', '/ItemSubCategories/dailySalesInventory',['escape' => false, 'class' => 'showLoader']).'</li>';
 					?>
 			 	</ul>
 				

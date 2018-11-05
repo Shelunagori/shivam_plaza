@@ -24,4 +24,5 @@ drop salary in employees
 new table employee_salaries
 repair data for all employees
 
+----------done---------------
 

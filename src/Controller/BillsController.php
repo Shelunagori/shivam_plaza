@@ -1229,6 +1229,7 @@ class BillsController extends AppController
         $this->set(compact('exploded_date_from_to', 'data'));
     }
 
+    
 
     
 }
