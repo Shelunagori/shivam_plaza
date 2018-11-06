@@ -26,3 +26,7 @@ repair data for all employees
 
 ----------done---------------
 
+*****5-11-2018
+T1036	Edit back date data in Daily Inventory
+ALTER TABLE `inventory_records` CHANGE `wastage` `wastage` DECIMAL(10,2) NULL DEFAULT NULL;
+ALTER TABLE `inventory_records` CHANGE `adjustment` `adjustment` DECIMAL(10,2) NULL DEFAULT NULL;

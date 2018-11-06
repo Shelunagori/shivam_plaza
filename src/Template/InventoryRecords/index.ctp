@@ -61,7 +61,10 @@
 
                 <?php if($date_from){ 
                   foreach ($OldData as $Tdate=>$OldDataRow) { ?>
-                  <div><span style="background-color: #CCC;padding: 5px;"><?php echo date('d-m-Y', $Tdate); ?></span></div>
+                  <div>
+                    <span style="background-color: #CCC;padding: 5px;"><?php echo date('d-m-Y', $Tdate); ?></span>
+                    <?= $this->Html->link('Edit','/InventoryRecords/edit/'.$Tdate,['class'=>'btn blue btn-xs pull-right']) ?>
+                  </div>
                   <table class="table table-bordered table-stripped">
                       <tr>
                          <th>Item</th>
