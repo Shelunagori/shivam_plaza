@@ -299,10 +299,10 @@ $order=$pass[1];
 											<table width="100%" id="newCustomerTable" style="display:block;">
 												<tr>
 													<td style="padding-right: 5px;width: 40%;" width="40%">
-														<?php echo $this->Form->input('customer_name',['label' => false,'class'=>'form-control  input-sm ', 'placeholder' => 'Name']);?>
+														<?php echo $this->Form->input('customer_name',['label' => false,'class'=>'form-control  input-sm allowCharSpace', 'placeholder' => 'Name']);?>
 													</td>
 													<td style="padding-right: 5px;width: 40%;" width="40%">
-														<?php echo $this->Form->input('customer_mobile',['label' => false,'class'=>'form-control input-sm ', 'placeholder' => 'Mobile', 'autocomplete' => 'off']);?>
+														<?php echo $this->Form->input('customer_mobile',['label' => false,'class'=>'form-control input-sm allowMobileOnly', 'placeholder' => 'Mobile', 'autocomplete' => 'off', 'maxlength' => '10']);?>
 													</td>
 													<td>
 														<button type="button" class="btn btn-danger btn-sm" id="FetchCusInfo">Save</button>
@@ -1208,6 +1208,10 @@ $order=$pass[1];
 
 		$('#UpdateCustomer').die().live('click',function(event){
 			 	var customer_name = $('#c_name').val();
+			 	if(!customer_name){
+					alert('Provide name.');
+					return;
+				}
 		        var customer_mobile = $('#c_mobile_no').val();
 		        var customer_email = $('#c_email').val();
 		        var customer_dob = $('#dob').val();
@@ -1251,6 +1255,10 @@ $order=$pass[1];
 		$('#FetchCusInfo').die().live('click',function(event){
 			var customer_name = $('#customer-name').val();
 			var customer_mobile = $('#customer-mobile').val();
+			if(!customer_name){
+				alert('Provide name.');
+				return;
+			}
 			var url='".$this->Url->build(['controller'=>'Customers','action'=>'saveNewCustomer'])."';
 			url=url+'?customer_name='+customer_name+'&customer_mobile='+customer_mobile;
 			$.ajax({

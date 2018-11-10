@@ -278,6 +278,40 @@ License: You must have a valid license purchased only from themeforest(the above
 			$('a[role=button]').live('click',function(e) {
 				e.preventDefault();
 			});
+
+			$('.allowCharSpace').keypress(function(event){
+			    //get envent value       
+			    var inputValue = event.which;
+			    // check whitespaces only.
+			    if(inputValue == 32){
+			        return true;    
+			    }
+			     // check number only.
+			    if(inputValue == 48 || inputValue == 49 || inputValue == 50 || inputValue == 51 || inputValue == 52 || inputValue == 53 ||  inputValue ==  54 ||  inputValue == 55 || inputValue == 56 || inputValue == 57){
+			        event.preventDefault();
+			    }
+			    // check special char.
+			    if(!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0)) { 
+			        event.preventDefault(); 
+			    }
+			});
+
+			$('.allowMobileOnly').keypress(function(evt){
+			    evt = (evt) ? evt : window.event;
+				var charCode = (evt.which) ? evt.which : evt.keyCode;
+				if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+					event.preventDefault(); 
+				}
+			});
+
+			$('.allowMobileOnly').keyup(function(e){
+				var phoneNo=$(this).val();
+				if (phoneNo.length >= 10) {
+					e.preventDefault();
+   					return false;
+				}
+			});
+
 		});
 		
 		
@@ -350,6 +384,8 @@ License: You must have a valid license purchased only from themeforest(the above
 
             e.preventDefault(); // prevent the default action (scroll / move caret)
         });
+
+
 		</script>
 		<?= $this->fetch('scriptBottom')?>
 		<!-- END JAVASCRIPTS -->
