@@ -34,7 +34,7 @@
 							</td>
 							<td align="right">
 								<span style="color: #606062;">KOT Time: </span>
-								<span style="margin-left: 10px;"> <?php echo date('h:i A',strtotime($Kots->created_on)); ?> </span>
+								<span style="margin-left: 10px;"> <?php echo $Kots->created_on->format('h:i A'); ?> </span>
 							</td>
 						</tr>
 						<tr>
@@ -144,7 +144,7 @@
 	</body>
 </html>
 <script type="text/javascript">
-	window.print();
-	window.close();
+	//window.print();
+	//window.close();
 </script>
 
