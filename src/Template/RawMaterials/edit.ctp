@@ -23,7 +23,7 @@
         <div class="portlet-body">
             <?= $this->Form->create($rawMaterial, ['id'=>'form_sample_1']) ?>
                 <div class="row">
-                    <div class="form-group col-md-8">
+                    <div class="form-group col-md-4">
                         <label class="control-label col-md-12"> Name  <span class="required"> * </span></label>
                         <div class ="row">
                             <div class="col-md-12 input-icon right">
@@ -31,6 +31,26 @@
                                 <?php echo $this->Form->control('name',['class'=>'form-control  ','label'=>false,'placeholder'=>'Raw Material Name','required'=>'required','id'=>'name']); ?>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="form-group col-md-4 ">
+                        <label class="control-label col-md-12"> Sub Category  <span class="required"> * </span></label>
+                        <div class="row">
+                            <div class="col-md-12 input-icon right">
+                                <i class="fa"></i>
+                                <?php echo $this->Form->input('raw_material_sub_category_id',['options' =>$rawMaterialCategories,'label' => false,'class'=>'form-control select2 ','required'=>'required','id'=>'tax_id','empty'=>'Select...']);?>
+                            </div>
+                        </div>  
+                    </div>
+
+                    <div class="form-group col-md-4 ">
+                        <label class="control-label col-md-12"> Tax  <span class="required"> * </span></label>
+                        <div class="row">
+                            <div class="col-md-12 input-icon right">
+                                <i class="fa"></i>
+                                <?php echo $this->Form->input('tax_id',['options' =>$Taxes,'label' => false,'class'=>'form-control select2 ','required'=>'required','id'=>'tax_id','empty'=>'Select...']);?>
+                            </div>
+                        </div>  
                     </div>
                     
                 </div> 

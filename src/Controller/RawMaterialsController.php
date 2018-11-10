@@ -50,8 +50,7 @@ class RawMaterialsController extends AppController
         }
 		$Taxes = $this->RawMaterials->Taxes->find('list');
         $units = $this->RawMaterials->SecondaryUnits->find()->where(['is_deleted'=>0]);
-        $rawMaterialCategories = $this->RawMaterials->RawMaterialSubCategories->find('list', ['limit' => 200])
-        	->where(['RawMaterialSubCategories.is_deleted'=>0]);
+        $rawMaterialCategories = $this->RawMaterials->RawMaterialSubCategories->find('list')->where(['RawMaterialSubCategories.is_deleted'=>0]);
         $this->set(compact('rawMaterial','Taxes','units','rawMaterialCategories'));
     }
 
@@ -79,7 +78,8 @@ class RawMaterialsController extends AppController
         }
         $Taxes = $this->RawMaterials->Taxes->find('list');
         $units = $this->RawMaterials->SecondaryUnits->find()->where(['is_deleted'=>0]);
-        $this->set(compact('rawMaterial','Taxes','units','id'));
+        $rawMaterialCategories = $this->RawMaterials->RawMaterialSubCategories->find('list')->where(['RawMaterialSubCategories.is_deleted'=>0]);
+        $this->set(compact('rawMaterial','Taxes','units','id', 'rawMaterialCategories'));
     }
 
     /**
