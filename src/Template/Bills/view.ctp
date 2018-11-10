@@ -49,7 +49,7 @@
 							</td>
 							<td align="right">
 								<span style="color: #606062;">Bill Time: </span>
-								<span style="margin-left: 10px;"> <?php echo date('h:i A',strtotime($bill->created_on)); ?> </span>
+								<span style="margin-left: 10px;"> <?php echo $bill->created_on->format('h:i A'); ?> </span>
 							</td>
 						</tr>
 						<tr>
