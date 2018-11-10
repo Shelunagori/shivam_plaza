@@ -87,7 +87,7 @@
                             $total=[]; $totalQty=[]; $totalItem=[];
                             foreach ($Vegetables as $Vegetable) { ?>
                                <tr >
-                                   <td>
+                                   <td style="white-space: nowrap;">
                                         <?= h($Vegetable->name) ?>
                                         <input type="hidden" class="form-control input-sm" name="vegetable[<?= h($Vegetable->id) ?>]" placeholder="0" value="<?= h($Vegetable->id) ?>" >
                                     </td>

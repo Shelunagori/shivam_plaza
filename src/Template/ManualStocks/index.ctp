@@ -127,9 +127,11 @@
             if(sub_category_id!=raw_material_sub_category_id){
                 sub_category_id = raw_material_sub_category_id;
             }else{
-                $(this).remove();
+                $(this).parent('tr').remove();
             }
         });
+
+        
         
     });
     ";

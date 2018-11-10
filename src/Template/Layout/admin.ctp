@@ -316,6 +316,80 @@
 		$('.showLoader').live('click',function(e) {
 			$('#loading').show();
 		});
+
+		$(document).keydown(function(e) {
+            switch(e.which) {
+                case 37: // left
+                var i;
+                var focused = $(':focus');
+                var TDindex=focused.closest('td').index();
+                for (i = TDindex-1; i >= 0; i--){
+                	var tabindex=focused.closest('tr').find('td:eq('+i+')').find('input').attr('tabindex');
+                	if(!tabindex){ tabindex=0; }
+                	if(tabindex=='-1'){
+
+                	}else{
+                		var l=focused.closest('tr').find('td:eq('+i+')').find('input').length;
+		                if(l){
+		                	focused.closest('tr').find('td:eq('+i+')').find('input').focus();
+		                	break;
+		                }
+                	}
+                }
+                break;
+
+                case 39: // right
+                var i;
+                var focused = $(':focus');
+                var TDindex=focused.closest('td').index();
+                for (i = TDindex+1; i <= 1000; i++){
+                	var tabindex=focused.closest('tr').find('td:eq('+i+')').find('input').attr('tabindex');
+                	if(!tabindex){ tabindex=0; }
+                	if(tabindex=='-1'){
+
+                	}else{
+                		var l=focused.closest('tr').find('td:eq('+i+')').find('input').length;
+		                if(l){
+		                	focused.closest('tr').find('td:eq('+i+')').find('input').focus();
+		                	break;
+		                }
+                	}
+                }
+                break;
+
+                case 40: // down
+                var dw;
+                var focused = $(':focus');
+                var TDindex=focused.closest('td').index();
+                var TRindex=focused.closest('tr').index();
+	            for (dw = TRindex+1; dw <= 1000; dw++){
+	            	var l=focused.closest('tbody').find('tr:eq('+dw+')').find('td:eq('+TDindex+')').find('input').length;
+	            	if(l){
+	                	focused.closest('tbody').find('tr:eq('+dw+')').find('td:eq('+TDindex+')').find('input').focus();
+	                	break;
+	                }
+	            }
+                break;
+
+                case 38: // up
+                var dw;
+                var focused = $(':focus');
+                var TDindex=focused.closest('td').index();
+                var TRindex=focused.closest('tr').index();
+	            for (dw = TRindex-1; dw >= 0; dw--){
+	            	var l=focused.closest('tbody').find('tr:eq('+dw+')').find('td:eq('+TDindex+')').find('input').length;
+	            	if(l){
+	                	focused.closest('tbody').find('tr:eq('+dw+')').find('td:eq('+TDindex+')').find('input').focus();
+	                	break;
+	                }
+	            }
+                break;
+
+                default: return; // exit this handler for other keys
+            }
+
+            e.preventDefault(); // prevent the default action (scroll / move caret)
+        });
 		</script>
 		<?= $this->fetch('scriptBottom')?>
 		<!-- END JAVASCRIPTS -->
