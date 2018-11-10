@@ -60,7 +60,14 @@
 			</div>
 			<div class="portlet-body" id="ExcelPage">
 
-				<?php if($from_date && $to_date){ ?>
+				<?php 
+				if($from_date=='1970-01-01'){
+					$from_date='';
+				}
+				if($to_date=='1970-01-01'){
+					$to_date='';
+				}
+				if($from_date && $to_date){ ?>
 
 				<?php
 				$stock=[];
