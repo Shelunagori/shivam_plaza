@@ -296,7 +296,7 @@ License: You must have a valid license purchased only from themeforest(the above
 			    }
 			});
 
-			$('.allowNumberOnly').keypress(function(evt){
+			$('.allowMobileOnly').keypress(function(evt){
 			    evt = (evt) ? evt : window.event;
 				var charCode = (evt.which) ? evt.which : evt.keyCode;
 				if (charCode > 31 && (charCode < 48 || charCode > 57)) {
