@@ -40,7 +40,7 @@
                             <div class="col-md-12">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
-                                    <input <?php if(!empty($id)){ echo "value='".date('d-m-Y', strtotime($booking->booking_date))."'"; } ?> name="booking_date" class="form-control date-picker" data-date-format="dd-mm-yyyy" required="required" placeholder="Date">
+                                    <input <?php if(!empty($id)){ echo "value='".date('d-m-Y', strtotime($booking->booking_date))."'"; } ?> name="booking_date" class="form-control date-picker" data-date-format="dd-mm-yyyy" required="required" placeholder="dd-mm-yyyy">
                                 </div>
                             </div>
                         </div>
@@ -50,16 +50,14 @@
                             <div class="col-md-12">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
-                                    <input type="text" <?php if(!empty($id)){ echo "value='".$booking->no_of_guests."'"; } ?> name="no_of_guests" class="form-control " Placeholder="0" >
+                                    <input type="text" <?php if(!empty($id)){ echo "value='".$booking->no_of_guests."'"; } ?> name="no_of_guests" class="form-control allowMobileOnly" Placeholder="0" >
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">   
                         <div class="form-group col-md-6">
-                            <label class="control-label col-md-12"> Customer Name <span class="required" aria-required="true">*
-                             </span>
-                            </label>
+                            <label class="control-label col-md-12"> Customer Name </label>
                             <div class="col-md-12">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
@@ -68,9 +66,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="control-label col-md-12"> Customer Mobile <span class="required" aria-required="true">*
-                             </span>
-                            </label>
+                            <label class="control-label col-md-12"> Customer Mobile </label>
                             <div class="col-md-12">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
