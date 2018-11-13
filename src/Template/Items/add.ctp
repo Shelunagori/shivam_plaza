@@ -283,11 +283,13 @@ if(!empty($id)){
 	}
 }
 
+if(!$focus_id){ $focus_id=0; }
+$url = $this->Url->build(["controller"=>"items","action"=>"index"]);
 $js.=';
 $(document).ready(function() {
-
+	
 	$.ajax({
-      url: "http://localhost/shivam_plaza_github/Items/index",
+      url: "'.$url.'",
       success: function( data ) {
         $("#itemList").html(data);
 
@@ -297,6 +299,7 @@ $(document).ready(function() {
 		$("#search3").live("keyup",function() {
 			var val = $.trim($(this).val()).replace(/ +/g, " ").toLowerCase();
 			var v = $(this).val();
+			console.log(v);
 			if(v){ 
 				rows.show().filter(function() {
 					var text = $(this).text().replace(/\s+/g, " ").toLowerCase();
