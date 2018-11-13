@@ -5,7 +5,7 @@ if (in_array("1", $userPages)){
 ?>
 
 <?php 
-$target=array("6","7","9","43");
+$target=array("6","7","8","43");
 if(!empty(count(array_intersect($userPages, $target)))){
 ?>
 	<li class="start">
@@ -21,8 +21,8 @@ if(!empty(count(array_intersect($userPages, $target)))){
 			if (in_array("7", $userPages)){
 				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Item Sub-Category</span>', '/ItemSubCategories/add',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
-			if (in_array("9", $userPages)){
-				echo '<li>'.$this->Html->link('<span class="title" style="margin-left: 15px;">Item Master</span>', '/Items/index',['escape' => false, 'class' => 'showLoader']).'</li>';
+			if (in_array("8", $userPages)){
+				echo '<li>'.$this->Html->link('<span class="title" style="margin-left: 15px;">Item Master</span>', '/Items/add',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
 			if (in_array("43", $userPages)){
 				echo '<li>'.$this->Html->link('<span class="title" style="margin-left: 15px;">Bill Setting</span>', '/Bill-settings',['escape' => false, 'class' => 'showLoader']).'</li>';

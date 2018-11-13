@@ -20,7 +20,7 @@
 				
 				<div class="caption" style="float: left;">
 					<?php
-					echo $this->Html->link('<i class="fa fa-plus" style="font-size: 16px;padding-right:2px;" ></i> Item List', '/Items/index',['escape' => false, 'class' => 'showLoader','style'=>'text-decoration: none;']);
+					//echo $this->Html->link('<i class="fa fa-plus" style="font-size: 16px;padding-right:2px;" ></i> Item List', '/Items/index',['escape' => false, 'class' => 'showLoader','style'=>'text-decoration: none;']);
 					?>
 				</div>
 				<?php } ?>
@@ -35,7 +35,7 @@
 						<div class="col-md-12 horizontal "></div>
 				</div>
 			</div>
-			<div class="portlet-body">
+			<div class="portlet-body" style="height: 200px; overflow: auto;">
 				<div class="">
 					<?= $this->Form->create($item,['id'=>'form_sample_1']) ; ?>
 						<div class="row">
@@ -178,6 +178,14 @@
 		</div>
 	</div>
 </div>
+
+<?php if (in_array("9", $userPages)){ ?>
+<div class="row">
+	<div class="col-md-12" id="itemList" >
+		<div align="center">Loading item list...</div>
+	</div>
+</div>
+<?php } ?>
 <!-- BEGIN PAGE LEVEL STYLES -->
 	<?php echo $this->Html->css('/assets/global/plugins/select2/select2.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
 <!-- BEGIN COMPONENTS DROPDOWNS -->
@@ -277,12 +285,41 @@ if(!empty($id)){
 
 $js.=';
 $(document).ready(function() {
+
+	$.ajax({
+      url: "http://localhost/shivam_plaza_github/Items/index",
+      success: function( data ) {
+        $("#itemList").html(data);
+
+        $("tr[data-id='.$focus_id.']").find("a").focus();
+
+        var rows = $("#main_tbody2 tr.main_tr");
+		$("#search3").live("keyup",function() {
+			var val = $.trim($(this).val()).replace(/ +/g, " ").toLowerCase();
+			var v = $(this).val();
+			if(v){ 
+				rows.show().filter(function() {
+					var text = $(this).text().replace(/\s+/g, " ").toLowerCase();
+		
+					return !~text.indexOf(val);
+				}).hide();
+			}else{
+				rows.show();
+			}
+		}); 
+      },
+      error: function(e){
+      	//console.log(e.responseText);
+      }
+    });
+
+    
+
+
 	rename_rows();
 	$(document).on("change",".ShowUnit", function(){
 		var unit_name = $("option:selected", this).attr("unit_name");
 		$(this).closest("tr.main_tr").find(".unitType").val(unit_name); 
-		 
-		
 	});
 
 	$(document).on("click", ".add_row", function(e)

@@ -13,7 +13,7 @@ use App\Controller\AppController;
 class ItemsController extends AppController
 {   
 	public function index(){
-		$this->viewBuilder()->layout('admin');
+		$this->viewBuilder()->layout('');
 		
         $itemslist = $this->Items->find()->contain(['ItemSubCategories']);
 		$this->set(compact('itemslist'));
@@ -21,6 +21,7 @@ class ItemsController extends AppController
 
     public function add($id = null, $copy=null)
     {
+        $focus_id=$this->request->query('focus-id');
 		$this->viewBuilder()->layout('admin');
 		if(!$id)
 		{				
@@ -44,7 +45,7 @@ class ItemsController extends AppController
             //pr($item); exit;
             if ($this->Items->save($item)) {
                 $this->Flash->success(__('The item has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'add?focus-id='.$item->id]);
             }
             $this->Flash->error(__('The item could not be saved. Please, try again.'));
         }
@@ -99,7 +100,7 @@ class ItemsController extends AppController
         }
 
         
-        $this->set(compact('item', 'itemSubCategories','id','Taxes','option'));
+        $this->set(compact('item', 'itemSubCategories','id','Taxes','option', 'focus_id'));
 
     }
  
@@ -116,7 +117,7 @@ class ItemsController extends AppController
             $this->Flash->error(__('The item could not be freeze. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'add?focus-id='.$item->id]);
     }
     public function undelete($id = null)
     {
@@ -131,7 +132,7 @@ class ItemsController extends AppController
             $this->Flash->error(__('The item could not be unfreezed. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'add?focus-id='.$item->id]);
     }
 
     public function foodCostingReport(){
@@ -306,14 +307,14 @@ class ItemsController extends AppController
         $Item = $this->Items->get($item_id);
         $Item->is_favorite=1;
         $this->Items->save($Item);
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'add?focus-id='.$Item->id]);
     }
 
     public function unfavorite($item_id=null){
         $Item = $this->Items->get($item_id);
         $Item->is_favorite=0;
         $this->Items->save($Item);
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'add?focus-id='.$Item->id]);
     }
 
 }

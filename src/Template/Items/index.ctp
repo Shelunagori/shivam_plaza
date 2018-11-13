@@ -1,7 +1,7 @@
 <?php echo $this->Html->css('mystyle'); ?>
 <?php $this->set("title", 'Item-List | DOSA PLAZA'); ?>
 
-<div class="row" style="margin-top:15px;">
+<div class="row" style="margin-top:-15px;">
 	<div class="col-md-12 main-div">
 		<!-- BEGIN ALERTS PORTLET-->
 		<div class="portlet box blue-hoki">
@@ -25,8 +25,8 @@
 						<div class="col-md-12 horizontal "></div>
 				</div>
 			</div>
-			<div class="portlet-body">
-				<table class="table table-str" cellpadding="0" cellspacing="0" id="main_tbody">
+			<div class="portlet-body" style="height: 200px; overflow: auto;">
+				<table class="table table-str" cellpadding="0" cellspacing="0" id="main_tbody2">
 					<thead>
 						<tr>
 							<th scope="col"><?= ('S.No') ?></th> 
@@ -39,7 +39,7 @@
 					</thead>
 					<tbody>
 						<?php $x=0; foreach ($itemslist as $country): ?>
-						<tr class="main_tr">
+						<tr class="main_tr" data-id="<?php echo ($country->id) ?>">
 							<td><?= ++$x; ?></td> 
 							<td><?= h($country->name) ?></td>
 							<td><?= h($country->rate) ?></td>
