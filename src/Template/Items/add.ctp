@@ -35,7 +35,7 @@
 						<div class="col-md-12 horizontal "></div>
 				</div>
 			</div>
-			<div class="portlet-body" style="height: 200px; overflow: auto;">
+			<div class="portlet-body" >
 				<div class="">
 					<?= $this->Form->create($item,['id'=>'form_sample_1']) ; ?>
 						<div class="row">
@@ -316,7 +316,29 @@ $(document).ready(function() {
       }
     });
 
-    
+    $(".markFav").die().live("click",function(event){
+    	event.preventDefault();
+    	var row_no=$(this).attr("row_no");
+		var url=$(this).closest("a").attr("href");
+		$.ajax({
+			url: url,
+		}).done(function(response) {
+			$("span.unfavbox[row_no="+row_no+"]").show();
+			$("span.favbox[row_no="+row_no+"]").hide();
+		});
+	});
+
+	$(".markunFav").die().live("click",function(event){
+    	event.preventDefault();
+    	var row_no=$(this).attr("row_no");
+		var url=$(this).closest("a").attr("href");
+		$.ajax({
+			url: url,
+		}).done(function(response) {
+			$("span.unfavbox[row_no="+row_no+"]").hide();
+			$("span.favbox[row_no="+row_no+"]").show();
+		});
+	});
 
 
 	rename_rows();

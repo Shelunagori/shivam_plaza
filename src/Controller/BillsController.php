@@ -77,6 +77,113 @@ class BillsController extends AppController
         $this->set(compact('bills', 'bill_no', 'from_date', 'to_date', 'amount_from', 'amount_to', 'customer_name', 'mobile_no', 'customer_code'));
     }
 
+    public function bulk()
+    {
+        $this->viewBuilder()->layout('admin');
+
+        $where=[];
+         $where['Bills.is_deleted']='no';
+
+        $bill_no=$this->request->query('bill_no');
+        if(!empty($bill_no)){
+            $where['Bills.voucher_no']=$bill_no;
+        }
+
+        $from_date=$this->request->query('from_date');
+        if(!empty($from_date)){
+            $from_date=date("Y-m-d",strtotime($this->request->query('from_date')));
+            $where['Bills.transaction_date >=']=$from_date;
+        }
+
+        $to_date=$this->request->query('to_date');
+        if(!empty($to_date)){
+            $to_date=date("Y-m-d",strtotime($this->request->query('to_date')));
+            $where['Bills.transaction_date <=']=$to_date;
+        }
+
+        $amount_from=$this->request->query('amount_from');
+        if(!empty($amount_from)){
+            $where['Bills.grand_total >=']=$amount_from;
+        }
+
+        $amount_to=$this->request->query('amount_to');
+        if(!empty($amount_to)){
+            $where['Bills.grand_total <=']=$amount_to;
+        }
+
+        $customer_name=$this->request->query('customer_name');
+        if(!empty($customer_name)){
+            $where['Customers.name LIKE']='%'.$customer_name.'%';
+        }
+
+        $mobile_no=$this->request->query('mobile_no');
+        if(!empty($mobile_no)){
+            $where['Customers.mobile_no LIKE']='%'.$mobile_no.'%';
+        }
+
+        $customer_code=$this->request->query('customer_code');
+        if(!empty($customer_code)){
+            $where['Customers.customer_code']=$customer_code;
+        }
+
+        $payment_type=$this->request->query('payment_type');
+        if(!empty($payment_type)){
+            $where['Bills.payment_type']=$payment_type;
+        }
+
+        
+        $bills = $this->Bills->find()->contain(['Tables', 'Customers'])->where($where);
+
+        $items=$this->Bills->BillRows->Items->find('list')->where(['is_deleted'=>0]);
+
+        $this->set(compact('bills', 'bill_no', 'from_date', 'to_date', 'amount_from', 'amount_to', 'customer_name', 'mobile_no', 'customer_code', 'payment_type', 'items'));
+    }
+
+    public function modify(){
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $data=$this->request->data();
+            $bill_ids=$data['bill_ids'];
+            $item_id=$data['item_id'];
+            foreach ($bill_ids as $bill_id) {
+                $bill=$this->Bills->get($bill_id,[
+                    'contain' => ['BillRows']
+                ]);
+
+                $item=$this->Bills->BillRows->Items->get($item_id, [
+                    'contain' => ['Taxes']
+                ]);
+                
+                $this->Bills->BillRows->deleteAll(['bill_id' => $bill->id]);
+
+                $bill_row = $this->Bills->BillRows->newEntity();
+                $bill_row->bill_id=$bill->id;
+                $bill_row->item_id=$item_id;
+                $bill_row->quantity=1;
+                $bill_row->rate=$item->rate;
+                $bill_row->amount=1*$item->rate;
+                $bill_row->discount_per=0;
+                $bill_row->discount_amount=0;
+
+                $net_amount=(1*$item->rate)*(100+$item->tax->tax_per)/100;
+
+                $net_amount_after_round_off=round($net_amount);
+                $round_off=$net_amount_after_round_off-$net_amount;
+
+                $bill_row->net_amount=$net_amount;
+                $bill_row->tax_per=$item->tax->tax_per;
+                $bill->bill_rows=[];
+                $bill->bill_rows[0]=$bill_row;
+
+                $bill->total=$net_amount;
+                $bill->round_off=$round_off;
+                $bill->grand_total=$net_amount_after_round_off;
+                $this->Bills->save($bill);
+            }
+            $this->Flash->success(__('Bills have been modified.'));
+            return $this->redirect(['action' => 'bulk']);
+        }
+    }
+
     /**
      * View method
      *
@@ -129,7 +236,7 @@ class BillsController extends AppController
         $offer_id=$this->request->query('offer_id');
         $oneComment=$this->request->query('oneComment');
         
-        if($order_type=="takeaway"){
+        if($order_type!="delivery"){
             $payment_type=$this->request->query('payment_type');
             $c_address="";
         }else{

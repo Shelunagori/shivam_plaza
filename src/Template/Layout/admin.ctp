@@ -189,6 +189,18 @@
 							<i class="fa fa-angle-down"></i>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-default">
+								<?php if($coreVariable['current_software']=='Actual'){ ?>
+									<li>
+										<?php echo '<li>'.$this->Html->link('Switch to Dummy', '/Users/createCopy',['escape' => false]).'</li>'; ?>
+									</li>
+								<?php }else{ ?>
+									<li>
+										<?php 
+										echo '<li>'.$this->Html->link('Switch to Actual', '/Users/switchToActual',['escape' => false]).'</li>'; 
+										echo '<li>'.$this->Html->link('Bulk Edit', '/Bills/bulk',['escape' => false]).'</li>'; 
+										?>
+									</li>
+								<?php } ?>
 								
 								<li>
 									<?php echo '<li>'.$this->Html->link($this->Html->tag('i', '', ['class' => 'icon-lock']).'Log Out', '/Users/logout',['escape' => false]).'</li>'; ?>

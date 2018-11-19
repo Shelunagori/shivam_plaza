@@ -1,6 +1,6 @@
 <?php echo $this->Html->css('mystyle'); ?>
 <?php $this->set("title", 'RawMaterialslist | DOSA PLAZA '); ?>	
-<div class="row" style="margin:15px">
+<div class="row" style="margin-top:-15px">
 	<div class="col-md-12">
 		<div class="portlet  box blue-hoki">
 			<div class="portlet-title">
@@ -25,7 +25,7 @@
 					<div class="col-md-12 horizontal "></div>
 				</div>
 			</div>
-			<div class="portlet-body">
+			<div class="portlet-body" style="height: 200px; overflow: auto;">
 				<table class="table table-str table-hover " cellpadding="0" cellspacing="0" id="main_tbody">
 					<thead>
 						<tr>

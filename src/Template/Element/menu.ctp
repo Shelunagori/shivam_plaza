@@ -61,7 +61,7 @@ if(!empty(count(array_intersect($userPages, $target)))){
 <?php } ?>
 
 <?php 
-$target=array("29","18","10","11","13");
+$target=array("29","18","10","11","12");
 if(!empty(count(array_intersect($userPages, $target)))){
 ?>
 	<li class="start">
@@ -83,8 +83,8 @@ if(!empty(count(array_intersect($userPages, $target)))){
 			if (in_array("11", $userPages)){
 				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">RM Sub-Category</span>', '/RawMaterialSubCategories/add',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
-			if (in_array("13", $userPages)){
-				echo '<li>'.$this->Html->link('<span class="title" style="margin-left: 15px;">RM Master</span>', '/RawMaterials/index',['escape' => false, 'class' => 'showLoader']).'</li>';
+			if (in_array("12", $userPages)){
+				echo '<li>'.$this->Html->link('<span class="title" style="margin-left: 15px;">RM Master</span>', '/RawMaterials/add',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
 			?>
 	 	</ul>

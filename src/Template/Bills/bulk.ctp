@@ -1,6 +1,6 @@
 <?php echo $this->Html->css('mystyle'); ?>
 
-<?php $this->set("title", 'Bills | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Bulk Edit | DOSA PLAZA'); ?>
 
 <div style="height: 15px;" >.</div>
 <div class="row">
@@ -61,6 +61,15 @@
                                 <td valign="bottom">
                                     <input type="text" class="form-control" placeholder="Code" name="customer_code" value="<?php echo @$customer_code; ?>">
                                 </td>
+                                <td valign="bottom" style="width: 100px;">
+                                    <?php 
+                                    $payment_options['']='-select-';
+                                    $payment_options['cash']='Cash';
+                                    $payment_options['card']='Card';
+                                    $payment_options['paytm']='Paytm';
+                                    ?>
+                                    <?= $this->Form->input('payment_type',['options' =>$payment_options,'label' => false,'class'=>'form-control','value'=>@$payment_type]) ?> 
+                                </td>
                                 <td valign="bottom">
                                     <button type="submit" class="btn" style="background-color: #FA6775;color: #FFF;">Filter</button>
                                 </td>
@@ -69,36 +78,40 @@
                     </div>
                 </form>
 
-                 <?php $page_no=$this->Paginator->current('Bills'); $page_no=($page_no-1)*20; ?>
-                <table class="table table-str " cellpadding="0" cellspacing="0">
+                <?php $action=$this->Url->build(['controller'=>'Bills','action'=>'modify']) ?>
+                <form method="post" action="<?php echo $action; ?>">
+                <table class="table table-str table-bordered" cellpadding="0" cellspacing="0">
                     <thead>
                         <tr>
-                            <th scope="col">Sr.N.</th>
-                            <th scope="col"><?= $this->Paginator->sort('voucher_no', 'Bill No') ?></th>
-                            <th scope="col"><?= $this->Paginator->sort('transaction_date', 'Transaction Date') ?></th>
-                            <th scope="col" style="text-align: right;"><?= $this->Paginator->sort('grand_total', 'Amount') ?></th>
-                             <th scope="col"><?= $this->Paginator->sort('order_type') ?></th>
-                            <th scope="col"><?= $this->Paginator->sort('Customers.name', 'Customer') ?></th>
-                            <th scope="col"><?= $this->Paginator->sort('Customers.customer_code', 'Customer Code') ?></th>
-                            <th scope="col"><?= $this->Paginator->sort('Customers.mobile_no', 'Mobile') ?></th>
-                            <th scope="col"><?= $this->Paginator->sort('table_id') ?></th>
-                            <th scope="col" class="actions"><?= __('Actions') ?></th>
+                            <th><input type="checkbox" value="1" class="selectAll"></th>
+                            <th>Bill No</th>
+                            <th>Transaction Date</th>
+                            <th style="text-align: right;">Amount</th>
+                            <th>Payment Type</th>
+                            <th>Order Type</th>
+                            <th>Customer</th>
+                            <th>Customer Code</th>
+                            <th>Mobile</th>
+                            <th>Table</th>
+                            <!-- <th>Actions</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($bills as $bill): ?>
                         <tr>
-                            <td><?= h(++$page_no) ?></td>
-                            <td><?= h($bill->voucher_no) ?></td>
+                            <td>
+                                <input type="checkbox" name="bill_ids[]" value="<?php echo $bill->id; ?>" class="chBox">
+                            </td>
+                            <td>RBL-<?php echo str_pad($bill->voucher_no, 6, "0", STR_PAD_LEFT); ?></td>
                             <td><?= h($bill->transaction_date->format('d-m-Y')) ?></td>
                             <td style="text-align: right;"><?= h($bill->grand_total) ?></td>
+                            <td><?= h($bill->payment_type) ?></td>
                             <td><?= h(ucfirst($bill->order_type)) ?></td>
                             <td><?= h(@$bill->customer->name) ?></td>
                             <td><?= h(@$bill->customer->customer_code) ?></td>
                             <td><?= h(@$bill->customer->mobile_no) ?></td>
                             <td><?= h(@$bill->table->name) ?></td>
-                            <td class="actions">
-                                <?php if($coreVariable['current_software']=='Actual'){ ?>
+                            <!-- <td class="actions">
                                 <?php
                                     echo $this->Html->link('Edit Customer Info ', '/Bills/customerinfo/'.$bill->id, ['class' => 'btn btn-xs blue showLoader']);
                                     echo $this->Html->link('Edit Bill ', '/Bills/edit/'.$bill->id, ['class' => 'btn btn-xs blue showLoader']);
@@ -123,56 +136,89 @@
                                             </form>
                                         </div>
                                     </div>
-                                <?php } ?>
-                            </td>
+                            </td> -->
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <div class="paginator">
-                    <ul class="pagination">
-                        <?= $this->Paginator->first('<< ' . __('first')) ?>
-                        <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                        <?= $this->Paginator->numbers() ?>
-                        <?= $this->Paginator->next(__('next') . ' >') ?>
-                        <?= $this->Paginator->last(__('last') . ' >>') ?>
-                    </ul>
-                    <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <?php echo $this->Form->input('item_id',['options'=>$items,'class'=>'form-control input-sm select2me ','empty' => '--Select Item--','label'=>false,'required'=>'required']); ?>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger">Modify Bills</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
+                </form>
+
             </div>
         </div>
     </div>
 </div>
 
+
+
 <!-- BEGIN PAGE LEVEL STYLES -->
     <!-- BEGIN COMPONENTS DROPDOWNS -->
-    <?php echo $this->Html->css('/assets/global/plugins/clockface/css/clockface.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
-    <?php echo $this->Html->css('/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
-    <?php echo $this->Html->css('/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
-    <?php echo $this->Html->css('/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
-    <?php echo $this->Html->css('/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
+    <?php echo $this->Html->css('/assets/global/plugins/bootstrap-select/bootstrap-select.min.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
+    <?php echo $this->Html->css('/assets/global/plugins/select2/select2.css', ['block' => 'PAGE_LEVEL_CSS']); ?>
     <!-- END COMPONENTS DROPDOWNS -->
 <!-- END PAGE LEVEL STYLES -->
 
- <!-- BEGIN PAGE LEVEL PLUGINS -->
-<?php echo $this->Html->script('/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-<?php echo $this->Html->script('/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-<?php echo $this->Html->script('/assets/global/plugins/clockface/js/clockface.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-<?php echo $this->Html->script('/assets/global/plugins/bootstrap-daterangepicker/moment.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-<?php echo $this->Html->script('/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-<?php echo $this->Html->script('/assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-<?php echo $this->Html->script('/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+    <!-- BEGIN COMPONENTS PICKERS -->
+    <?php echo $this->Html->script('/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
+    <!-- END COMPONENTS PICKERS -->
+    
+    <!-- BEGIN COMPONENTS DROPDOWNS -->
+    <?php echo $this->Html->script('/assets/global/plugins/bootstrap-select/bootstrap-select.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
+    <?php echo $this->Html->script('/assets/global/plugins/select2/select2.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>           
+    <!-- END COMPONENTS DROPDOWNS -->
 <!-- END PAGE LEVEL PLUGINS -->
+
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
-<?php echo $this->Html->script('/assets/global/scripts/metronic.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-<?php echo $this->Html->script('/assets/admin/layout/scripts/layout.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-<?php echo $this->Html->script('/assets/admin/layout/scripts/quick-sidebar.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-<?php echo $this->Html->script('/assets/admin/layout/scripts/demo.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-<?php echo $this->Html->script('/assets/admin/pages/scripts/components-pickers.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
-<!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN COMPONENTS PICKERS -->
+    <?php echo $this->Html->script('/assets/admin/pages/scripts/components-pickers.js', ['block' => 'PAGE_LEVEL_SCRIPTS_JS']); ?> 
+    <!-- END COMPONENTS PICKERS -->
+
+    <!-- BEGIN COMPONENTS DROPDOWNS -->
+     
+    <?php echo $this->Html->script('/assets/admin/pages/scripts/components-dropdowns.js', ['block' => 'PAGE_LEVEL_SCRIPTS_JS']); ?>
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <!-- BEGIN VALIDATEION -->
+    <?php echo $this->Html->script('/assets/global/plugins/jquery-validation/js/jquery.validate.min.js', ['block' => 'PAGE_LEVEL_PLUGINS_JS']); ?>
+    <?php echo $this->Html->script('/assets/admin/pages/scripts/form-validation.js', ['block' => 'PAGE_LEVEL_SCRIPTS_JS']); ?>
+    <!-- END VALIDATEION -->  
+    <!-- END PAGE LEVEL SCRIPTS -->
 <?php
 $js="
 $(document).ready(function() {
+    $('.selectAll').die().live('click',function(event){
+        if($(this).is(':checked')){
+            $('.chBox').closest('tr').attr('checked','checked');
+            $('.chBox').closest('tr').css('background-color','#c9d7f9');
+            $.uniform.update();
+        }else{
+            $('.chBox').closest('tr').removeAttr('checked');
+            $('.chBox').closest('tr').css('background-color','');
+            $.uniform.update();
+        }
+    });
+    
+
+    $('.chBox').die().live('click',function(event){
+        if($(this).is(':checked')){
+            $(this).closest('tr').css('background-color','#c9d7f9');
+        }else{
+            $(this).closest('tr').css('background-color','');
+        }
+    });
+    
     ComponentsPickers.init();
 });
 ";

@@ -25,7 +25,7 @@
 						<div class="col-md-12 horizontal "></div>
 				</div>
 			</div>
-			<div class="portlet-body" style="height: 200px; overflow: auto;">
+			<div class="portlet-body">
 				<table class="table table-str" cellpadding="0" cellspacing="0" id="main_tbody2">
 					<thead>
 						<tr>
@@ -95,10 +95,19 @@
 								<?php
 								if($country->is_deleted==0){
 									if($country->is_favorite==0){
-										echo $this->Html->image('unfavorite.png',['url'=>['controller'=>'Items','action'=>'favorite',$country->id],'class'=>'tooltips showLoader','data-original-title'=>'Mark as favorite','data-container'=>'body']);
+										$favdisplay="display:";
+										$unfavdisplay="display:none";
 									}else{
-										echo $this->Html->image('favorite.png',['url'=>['controller'=>'Items','action'=>'unfavorite',$country->id],'class'=>'tooltips showLoader','data-original-title'=>'Remove from favorite list','data-container'=>'body']);
+										$favdisplay="display:none";
+										$unfavdisplay="display:";
 									}
+									echo '<span class=favbox row_no='.$country->id.' style='.$favdisplay.'>';
+									echo $this->Html->image('unfavorite.png',['url'=>['controller'=>'Items','action'=>'favorite',$country->id],'class'=>'tooltips markFav','data-original-title'=>'Mark as favorite','data-container'=>'body','row_no'=>$country->id]);
+									echo '</span>';
+
+									echo '<span class=unfavbox row_no='.$country->id.' style='.$unfavdisplay.'>';
+									echo $this->Html->image('favorite.png',['url'=>['controller'=>'Items','action'=>'unfavorite',$country->id],'class'=>'tooltips markunFav','data-original-title'=>'Remove from favorite list','data-container'=>'body','row_no'=>$country->id]);
+									echo '</span>';
 								}
 								?>
 
@@ -133,6 +142,9 @@
     			rows.show();
     		}
     	}); 
+
+
+    	
 		
 	});
 	";

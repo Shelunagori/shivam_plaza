@@ -307,14 +307,16 @@ class ItemsController extends AppController
         $Item = $this->Items->get($item_id);
         $Item->is_favorite=1;
         $this->Items->save($Item);
-        return $this->redirect(['action' => 'add?focus-id='.$Item->id]);
+        echo '1'; exit();
+        //return $this->redirect(['action' => 'add?focus-id='.$Item->id]);
     }
 
     public function unfavorite($item_id=null){
         $Item = $this->Items->get($item_id);
         $Item->is_favorite=0;
         $this->Items->save($Item);
-        return $this->redirect(['action' => 'add?focus-id='.$Item->id]);
+        echo '1'; exit();
+        //return $this->redirect(['action' => 'add?focus-id='.$Item->id]);
     }
 
 }

@@ -69,12 +69,16 @@ class AppController extends Controller
             ],
 			'unauthorizedRedirect' => $this->referer(),
         ]);
+
+        $this->loadModel('BillSettings');
+        $BillSetting=$this->BillSettings->find()->first();
 		
 		 $coreVariable = [
 			'designation_id' => $this->Auth->User('employee.designation_id'),
             'user_name' => $this->Auth->User('employee.name'),
             'company_name' => 'Shivam Plaza', 
             'company_address' => '100 Feet Road, Shobhagpura, Udaipur, Rajasthan 313001', 
+            'current_software' => $BillSetting->current_software
         ];
 		$this->coreVariable = $coreVariable;
 		$this->set(compact('coreVariable'));

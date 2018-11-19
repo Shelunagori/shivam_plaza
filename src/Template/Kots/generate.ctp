@@ -317,7 +317,7 @@ $order=$pass[1];
 												<?php } ?>
 											</table>
 											<div id="customerSection"></div>
-											<?php if($order_type=="takeaway"){ ?>
+											<?php if($order_type!="delivery"){ ?>
 												<table width="70%"> 
 													<tr>
 														<td>
