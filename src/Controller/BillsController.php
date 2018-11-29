@@ -31,14 +31,20 @@ class BillsController extends AppController
         }
 
         $from_date=$this->request->query('from_date');
+        if(empty($from_date)){
+            $from_date=date('Y-m-d');
+        }
         if(!empty($from_date)){
-            $from_date=date("Y-m-d",strtotime($this->request->query('from_date')));
+            $from_date=date("Y-m-d",strtotime($from_date));
             $where['Bills.transaction_date >=']=$from_date;
         }
 
         $to_date=$this->request->query('to_date');
+        if(empty($to_date)){
+            $to_date=date('Y-m-d');
+        }
         if(!empty($to_date)){
-            $to_date=date("Y-m-d",strtotime($this->request->query('to_date')));
+            $to_date=date("Y-m-d",strtotime($to_date));
             $where['Bills.transaction_date <=']=$to_date;
         }
 
@@ -71,7 +77,7 @@ class BillsController extends AppController
             'contain' => ['Tables', 'Customers']
         ];
         $bills = $this->paginate(
-            $this->Bills->find()->where($where)
+            $this->Bills->find()->where($where)->order(['voucher_no'=>'ASC'])
         );
 
         $this->set(compact('bills', 'bill_no', 'from_date', 'to_date', 'amount_from', 'amount_to', 'customer_name', 'mobile_no', 'customer_code'));
@@ -204,6 +210,30 @@ class BillsController extends AppController
             'contain' => ['BillRows'=>['Items'], 'Customers', 'Employees']
         ]); 	
 		
+
+        $Kot = $this->Bills->Kots->find()->where(['Kots.bill_id' => $bill_id])->first();
+        $kot_no = $Kot->voucher_no;
+
+        $BillSetting = $this->Bills->BillSettings->get(1);
+
+        $this->set('bill', $bill);
+        $this->set('kot_no', $kot_no);
+        $this->set('BillSetting', $BillSetting);
+    }
+
+    public function view2()
+    {
+        $this->viewBuilder()->layout('');
+        $bill_id=$this->request->query('bill-id');
+        
+       /*  $bill = $this->Bills->get($bill_id, [
+            'contain' => ['BillRows'=>['Items'], 'Customers', 'Tables'=>['Employees']]
+        ]); */
+        
+        $bill = $this->Bills->get($bill_id, [
+            'contain' => ['BillRows'=>['Items'], 'Customers', 'Employees']
+        ]);     
+        
 
         $Kot = $this->Bills->Kots->find()->where(['Kots.bill_id' => $bill_id])->first();
         $kot_no = $Kot->voucher_no;
@@ -373,6 +403,49 @@ class BillsController extends AppController
         $bill->payment_status=0;
 
         $this->Bills->save($bill);
+
+        $B=$this->Bills->get($bill->id, [
+            'contain' => ['BillRows']
+        ]);
+
+        $CopyBill = $this->Bills->CopyBills->newEntity();
+        $CopyBill->transaction_date=$bill->transaction_date;
+        $CopyBill->voucher_no=$B->voucher_no;
+        $CopyBill->table_id=$B->table_id;
+        $CopyBill->total=$B->total;
+        $CopyBill->tax_id=$B->tax_id;
+        $CopyBill->round_off=$B->round_off;
+        $CopyBill->grand_total=$B->grand_total;
+        $CopyBill->customer_id=$B->customer_id;
+        $CopyBill->created_on=$B->created_on;
+        $CopyBill->order_type=$B->order_type;
+        $CopyBill->delivery_no=$B->delivery_no;
+        $CopyBill->take_away_no=$B->take_away_no;
+        $CopyBill->occupied_time=$B->occupied_time;
+        $CopyBill->status=$B->status;
+        $CopyBill->no_of_pax=$B->no_of_pax;
+        $CopyBill->payment_status=$B->payment_status;
+        $CopyBill->payment_type=$B->payment_type;
+        $CopyBill->employee_id=$B->employee_id;
+        $CopyBill->offer_id=$B->offer_id;
+        $CopyBill->is_deleted=$B->is_deleted;
+        $this->Bills->CopyBills->save($CopyBill);
+
+        foreach ($B->bill_rows as $bill_row) {
+            $CopyBillRow = $this->Bills->CopyBillRows->newEntity();
+            $CopyBillRow->bill_id=$bill_row->bill_id;
+            $CopyBillRow->item_id=$bill_row->item_id;
+            $CopyBillRow->quantity=$bill_row->quantity;
+            $CopyBillRow->rate=$bill_row->rate;
+            $CopyBillRow->amount=$bill_row->amount;
+            $CopyBillRow->discount_per=$bill_row->discount_per;
+            $CopyBillRow->discount_amount=$bill_row->discount_amount;
+            $CopyBillRow->net_amount=$bill_row->net_amount;
+            $CopyBillRow->tax_per=$bill_row->tax_per;
+            $this->Bills->CopyBillRows->save($CopyBillRow);
+        }
+
+
         //*****************************************//
         //      CREATE BILL END 
         //*****************************************//
@@ -642,6 +715,7 @@ class BillsController extends AppController
         $this->viewBuilder()->layout('');
 
         $bill_id = $this->request->query('bill_id');
+        $payment_type = $this->request->query('payment_type');
         $total = $this->request->query('total');
         $roundOff = $this->request->query('roundOff');
         $net = $this->request->query('net');
@@ -655,6 +729,7 @@ class BillsController extends AppController
         $bill->total=$total;
         $bill->round_off=$roundOff;
         $bill->grand_total=$net;
+        $bill->payment_type=$payment_type;
         $this->Bills->save($bill);
 
         $this->Bills->BillRows->StockLedgers->deleteAll(['bill_id' => $bill_id]);
@@ -1336,6 +1411,118 @@ class BillsController extends AppController
         $this->set(compact('exploded_date_from_to', 'data'));
     }
 
+    public function billrows(){
+        $this->viewBuilder()->layout('');
+        $bill_id=$this->request->query('bill_id');
+        $bill=$this->Bills->get($bill_id, [
+            'contain' => ['BillRows'=>['Items'] ]
+        ]);
+        $this->set(compact('bill'));
+    }
+
+    public function salesSummaryPaymentWise(){
+        $this->viewBuilder()->layout('admin');
+
+        $urls=$this->request->here();
+        $seturl=explode('?',$urls);
+        $this->set(compact('seturl'));
+
+        $payment_type=$this->request->query('payment_type');
+
+        $where=[];
+        $where['Bills.is_deleted']='no';
+
+        $date_from_to = $this->request->query('date_from_to');
+        $exploded_date_from_to = explode('/', $date_from_to);
+        $from_date = date('Y-m-d', strtotime($exploded_date_from_to[0]));
+        $to_date = date('Y-m-d', strtotime($exploded_date_from_to[1]));
+        if(!empty($date_from_to)){
+            $where['Bills.transaction_date >=']=$from_date;
+            $where['Bills.transaction_date <=']=$to_date;
+        }
+
+        $payment_type=$this->request->query('payment_type');
+        if(!empty($payment_type)){
+            $where['Bills.payment_type']=$payment_type;
+        }
+        
+
+        if($payment_type=='cash' or $payment_type==''){
+            $CashBills = $this->Bills->find()
+                        ->where($where)
+                        ->where(['Bills.payment_type'=>'cash'])
+                        ->contain(['Tables', 'Employees', 'Customers'])
+                        ->order(['Bills.transaction_date'=>'ASC']);
+        }
+
+        if($payment_type=='card' or $payment_type==''){
+            $CardBills = $this->Bills->find()
+                        ->where($where)
+                        ->where(['Bills.payment_type'=>'card'])
+                        ->contain(['Tables', 'Employees', 'Customers'])
+                        ->order(['Bills.transaction_date'=>'ASC']);
+        }
+
+        if($payment_type=='paytm' or $payment_type==''){
+            $PaytmBills = $this->Bills->find()
+                        ->where($where)
+                        ->where(['Bills.payment_type'=>'paytm'])
+                        ->contain(['Tables', 'Employees', 'Customers'])
+                        ->order(['Bills.transaction_date'=>'ASC']);
+        }
+        
+        $this->set(compact('exploded_date_from_to', 'CashBills', 'CardBills', 'PaytmBills', 'payment_type'));
+    }
+
+    public function salesSummaryOrderWise(){
+        $this->viewBuilder()->layout('admin');
+
+        $urls=$this->request->here();
+        $seturl=explode('?',$urls);
+        $this->set(compact('seturl'));
+
+        $order_type=$this->request->query('order_type');
+
+        $where=[];
+        $where['Bills.is_deleted']='no';
+
+        $date_from_to = $this->request->query('date_from_to');
+        $exploded_date_from_to = explode('/', $date_from_to);
+        $from_date = date('Y-m-d', strtotime($exploded_date_from_to[0]));
+        $to_date = date('Y-m-d', strtotime($exploded_date_from_to[1]));
+        if(!empty($date_from_to)){
+            $where['Bills.transaction_date >=']=$from_date;
+            $where['Bills.transaction_date <=']=$to_date;
+        }
+
+                
+
+        if($order_type=='dinner' or $order_type==''){
+            $dinnerBills = $this->Bills->find()
+                        ->where($where)
+                        ->where(['Bills.order_type'=>'dinner'])
+                        ->contain(['Tables', 'Employees', 'Customers'])
+                        ->order(['Bills.transaction_date'=>'ASC']);
+        }
+
+        if($order_type=='delivery' or $order_type==''){
+            $deliveryBills = $this->Bills->find()
+                        ->where($where)
+                        ->where(['Bills.order_type'=>'delivery'])
+                        ->contain(['Tables', 'Employees', 'Customers'])
+                        ->order(['Bills.transaction_date'=>'ASC']);
+        }
+
+        if($order_type=='takeaway' or $order_type==''){
+            $takeawayBills = $this->Bills->find()
+                        ->where($where)
+                        ->where(['Bills.order_type'=>'takeaway'])
+                        ->contain(['Tables', 'Employees', 'Customers'])
+                        ->order(['Bills.transaction_date'=>'ASC']);
+        }
+        
+        $this->set(compact('exploded_date_from_to', 'dinnerBills', 'deliveryBills', 'takeawayBills', 'order_type'));
+    }
     
 
     

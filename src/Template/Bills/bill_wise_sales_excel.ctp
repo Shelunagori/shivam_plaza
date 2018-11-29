@@ -37,12 +37,6 @@
 				<table border="1">
 					<tr>
 						<td>
-							<span>Bill No.</span> 
-							<span style="margin-left: 10px;color: #313131;">
-								<?= h($Bill->voucher_no) ?>
-							</span>
-						</td>
-						<td>
 							<span>Bill Date</span> 
 							<span style="margin-left: 10px;color: #313131;">
 								<?php echo date('d-m-Y', strtotime($Bill->transaction_date)); ?>
@@ -50,23 +44,21 @@
 							</span>
 						</td>
 						<td>
-							<span>No. of Pax</span> 
+							<span>Customer Name</span> 
 							<span style="margin-left: 10px;color: #313131;">
-								<?= h($Bill->no_of_pax) ?>
+								<?= h(@$Bill->customer->name) ?>
 							</span>
 						</td>
 						<td>
-							<span>Time Taken</span> 
+							<span>Customer Mobile</span> 
 							<span style="margin-left: 10px;color: #313131;">
-								<?php 
-								$Bill->occupied_time->format('Y-m-d H:i:s').'<br/>';
-								$Bill->created_on->format('Y-m-d H:i:s').'<br/>';
-								$datetime1 = new DateTime($Bill->occupied_time->format('Y-m-d H:i:s'));//start time
-								$datetime2 = new DateTime($Bill->created_on->format('Y-m-d H:i:s'));//end time
-								$interval = $datetime1->diff($datetime2);
-								echo $time    = $interval->format('%h')*60+$interval->format('%i') .' min ';
-								echo $interval->format('%s sec');
-								?>
+								<?= h(@$Bill->customer->mobile_no) ?>
+							</span>
+						</td>
+						<td>
+							<span>Customer Code</span> 
+							<span style="margin-left: 10px;color: #313131;">
+								<?= h(@$Bill->customer->customer_code) ?>
 							</span>
 						</td>
 						<td>
@@ -82,33 +74,18 @@
 					</tr>
 					<tr>
 						<td>
-							<span>Table No.</span> 
+							<span>Bill No.</span> 
 							<span style="margin-left: 10px;color: #313131;">
-								<?= h(@$Bill->table->name) ?>
+								<?= h($Bill->voucher_no) ?>
 							</span>
 						</td>
+						<td></td>
+						<td></td>
+						<td></td>
 						<td>
-							<span>Steward</span> 
+							<span>Captain</span> 
 							<span style="margin-left: 10px;color: #313131;">
 								<?= h(@$Bill->employee->name) ?>
-							</span>
-						</td>
-						<td>
-							<span>Customer Code</span> 
-							<span style="margin-left: 10px;color: #313131;">
-								<?= h(@$Bill->customer->customer_code) ?>
-							</span>
-						</td>
-						<td>
-							<span>Customer Mobile</span> 
-							<span style="margin-left: 10px;color: #313131;">
-								<?= h(@$Bill->customer->mobile_no) ?>
-							</span>
-						</td>
-						<td>
-							<span>Customer Name</span> 
-							<span style="margin-left: 10px;color: #313131;">
-								<?= h(@$Bill->customer->name) ?>
 							</span>
 						</td>
 					</tr>

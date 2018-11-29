@@ -92,7 +92,7 @@ if(!empty(count(array_intersect($userPages, $target)))){
 <?php } ?>
 
 <?php 
-$target=array("5","16","28","23");
+$target=array("5","16","28","23","49");
 if(!empty(count(array_intersect($userPages, $target)))){
 ?>
 	<li class="start">
@@ -113,6 +113,9 @@ if(!empty(count(array_intersect($userPages, $target)))){
 			}
 			if (in_array("23", $userPages)){
 				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Designations</span>', '/Designations/add',['escape' => false, 'class' => 'showLoader']).'</li>';
+			}
+			if (in_array("49", $userPages)){
+				echo '<li>'.$this->Html->link('<span style="margin-left: 15px;">Attendance-Report</span>', '/Employees/EmployeesAttendance',['escape' => false, 'class' => 'showLoader']).'</li>';
 			}
 			?>
 	 	</ul>

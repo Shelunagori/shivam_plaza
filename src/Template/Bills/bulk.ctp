@@ -93,6 +93,7 @@
                             <th>Customer Code</th>
                             <th>Mobile</th>
                             <th>Table</th>
+                            <th></th>
                             <!-- <th>Actions</th> -->
                         </tr>
                     </thead>
@@ -111,32 +112,9 @@
                             <td><?= h(@$bill->customer->customer_code) ?></td>
                             <td><?= h(@$bill->customer->mobile_no) ?></td>
                             <td><?= h(@$bill->table->name) ?></td>
-                            <!-- <td class="actions">
-                                <?php
-                                    echo $this->Html->link('Edit Customer Info ', '/Bills/customerinfo/'.$bill->id, ['class' => 'btn btn-xs blue showLoader']);
-                                    echo $this->Html->link('Edit Bill ', '/Bills/edit/'.$bill->id, ['class' => 'btn btn-xs blue showLoader']);
-                                    echo $this->Html->link('Re-Print ', '/Bills/view?bill-id='.$bill->id, ['class' => 'btn btn-xs blue showLoader','target'=>'_blank']);
-
-                                    echo $this->Html->link('Delete ', '#', ['data-target'=>'#deletemodal'.$bill->id,'data-toggle'=>'modal','class'=>'btn btn-xs red','data-container'=>'body']);
-                                    ?>
-                                    <div id="deletemodal<?php echo $bill->id; ?>" class="modal fade" role="dialog">
-                                        <div class="modal-dialog modal-md" >
-                                            <form method="post" action="<?php echo $this->Url->build(array('controller'=>'Bills','action'=>'delete',$bill->id)) ?>">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">
-                                                            Are you sure you want to delete this Bill?
-                                                        </h4>
-                                                    </div>
-                                                    <div class="modal-footer" style="border:none;">
-                                                        <button type="submit" class="btn  btn-sm btn-danger">Yes</button>
-                                                        <button type="button" class="btn  btn-sm btn-danger" data-dismiss="modal"style="color: #000000;    background-color: #DDDDDD;;">Cancel</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                            </td> -->
+                            <td>
+                                <button type="button" class="btn blue btn-xs billView" bill_id=<?php echo $bill->id; ?>>View</button>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -200,16 +178,33 @@ $js="
 $(document).ready(function() {
     $('.selectAll').die().live('click',function(event){
         if($(this).is(':checked')){
-            $('.chBox').closest('tr').attr('checked','checked');
+            $('.chBox').closest('tr').find('input[type=checkbox]').attr('checked','checked');
             $('.chBox').closest('tr').css('background-color','#c9d7f9');
             $.uniform.update();
         }else{
-            $('.chBox').closest('tr').removeAttr('checked');
+            $('.chBox').closest('tr').find('input[type=checkbox]').removeAttr('checked');
             $('.chBox').closest('tr').css('background-color','');
             $.uniform.update();
         }
     });
     
+
+    $('.billView').die().live('click',function(event){
+        var ths=$(this);
+        var bill_id=$(this).attr('bill_id');
+        if($('tr.details[bill_id='+bill_id+']').length){
+            $('tr.details[bill_id='+bill_id+']').remove();
+        }else{
+            var url='".$this->Url->build(['controller'=>'Bills','action'=>'billrows'])."';
+            url=url+'?bill_id='+bill_id;
+            $.ajax({
+                url: url,
+            }).done(function(response) {
+                ths.closest('tr').after( response );
+            });
+        }
+    });
+
 
     $('.chBox').die().live('click',function(event){
         if($(this).is(':checked')){

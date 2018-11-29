@@ -92,17 +92,13 @@
 						$TOTAL_SGST=0;
 						$TOTAL_TAXABLE=0;
 						$TOTAL_DISCOUNT=0;
+						$TOTAL_QTY=0;
+						$TOTAL_AMT=0;
 						foreach ($Bills as $Bill): ?>
 							<tr>
 								<td>
-									<table width="100%" class=" qwerty2" cellpadding="0" cellspacing="0" style="margin-top: 20px;">
+									<table width="100%" class=" qwerty2" style="margin-top: 0px;">
 										<tr>
-											<td>
-												<span>Bill No.</span> 
-												<span style="margin-left: 10px;color: #313131;">
-													<?= h($Bill->voucher_no) ?>
-												</span>
-											</td>
 											<td>
 												<span>Bill Date</span> 
 												<span style="margin-left: 10px;color: #313131;">
@@ -111,23 +107,21 @@
 												</span>
 											</td>
 											<td>
-												<span>No. of Pax</span> 
+												<span>Customer Name</span> 
 												<span style="margin-left: 10px;color: #313131;">
-													<?= h($Bill->no_of_pax) ?>
+													<?= h(@$Bill->customer->name) ?>
 												</span>
 											</td>
 											<td>
-												<span>Time Taken</span> 
+												<span>Customer Mobile</span> 
 												<span style="margin-left: 10px;color: #313131;">
-													<?php 
-													$Bill->occupied_time->format('Y-m-d H:i:s').'<br/>';
-													$Bill->created_on->format('Y-m-d H:i:s').'<br/>';
-													$datetime1 = new DateTime($Bill->occupied_time->format('Y-m-d H:i:s'));//start time
-													$datetime2 = new DateTime($Bill->created_on->format('Y-m-d H:i:s'));//end time
-													$interval = $datetime1->diff($datetime2);
-													echo $time    = $interval->format('%h')*60+$interval->format('%i') .' min ';
-													echo $interval->format('%s sec');
-													?>
+													<?= h(@$Bill->customer->mobile_no) ?>
+												</span>
+											</td>
+											<td>
+												<span>Customer Code</span> 
+												<span style="margin-left: 10px;color: #313131;">
+													<?= h(@$Bill->customer->customer_code) ?>
 												</span>
 											</td>
 											<td>
@@ -143,33 +137,18 @@
 										</tr>
 										<tr>
 											<td>
-												<span>Table No.</span> 
+												<span>Bill No.</span> 
 												<span style="margin-left: 10px;color: #313131;">
-													<?= h(@$Bill->table->name) ?>
+													<?= h($Bill->voucher_no) ?>
 												</span>
 											</td>
+											<td></td>
+											<td></td>
+											<td></td>
 											<td>
-												<span>Steward</span> 
+												<span>Captain</span> 
 												<span style="margin-left: 10px;color: #313131;">
 													<?= h(@$Bill->employee->name) ?>
-												</span>
-											</td>
-											<td>
-												<span>Customer Code</span> 
-												<span style="margin-left: 10px;color: #313131;">
-													<?= h(@$Bill->customer->customer_code) ?>
-												</span>
-											</td>
-											<td>
-												<span>Customer Mobile</span> 
-												<span style="margin-left: 10px;color: #313131;">
-													<?= h(@$Bill->customer->mobile_no) ?>
-												</span>
-											</td>
-											<td>
-												<span>Customer Name</span> 
-												<span style="margin-left: 10px;color: #313131;">
-													<?= h(@$Bill->customer->name) ?>
 												</span>
 											</td>
 										</tr>
@@ -180,16 +159,16 @@
 								<td style="padding: 0;">
 								 	<table width="100%" class="table table-bordered qwerty3" style="margin: 0;" cellpadding="0" cellspacing="0">
 								 		<tr>
-								 			<th>Item</th>
-								 			<th>Quantity</th>
-								 			<th>Rate</th>
-								 			<th>Amount</th>
-								 			<th>Discount %</th>
-								 			<th>Discount Rs</th>
-								 			<th>Taxable Value</th>
-								 			<th>CGST</th>
-								 			<th>SGST</th>
-								 			<th>Net</th>
+								 			<th width="20%">Item</th>
+								 			<th width="8.88%">Quantity</th>
+								 			<th width="8.88%">Rate</th>
+								 			<th width="8.88%">Amount</th>
+								 			<th width="8.88%">Discount %</th>
+								 			<th width="8.88%">Discount Rs</th>
+								 			<th width="8.88%">Taxable Value</th>
+								 			<th width="8.88%">CGST</th>
+								 			<th width="8.88%">SGST</th>
+								 			<th width="8.88%">Net</th>
 								 		</tr>
 								 		<?php 
 								 		$totalAmount=0;
@@ -231,30 +210,13 @@
 								 		<?php }?>
 								 		<tr>
 								 			<th colspan="3">Total</th>
-								 			<th><?php echo $totalAmount; ?></th>
+								 			<th><?php echo $totalAmount; $TOTAL_AMT+=$totalAmount; ?></th>
 								 			<th>-</th>
-								 			<th><?php echo $totalDisAmount; ?></th>
-								 			<th><?php echo $totalTV; ?></th>
-								 			<th><?php echo $totalCGSTAmount; ?></th>
-								 			<th><?php echo $totalSGSTAmount; ?></th>
-								 			<th><?php echo $totalNet; ?></th>
-								 		</tr>
-								 		<tr>
-								 			<th colspan="9" style="text-align: right;">Round off</th>
-								 			<th><?= h(@$Bill->round_off) ?></th>
-								 		</tr>
-								 		<tr>
-								 			<th colspan="9" style="text-align: right;">Total Bill Amount</th>
-								 			<th>
-								 				<?= h(@$Bill->grand_total) ?>
-								 				<?php
-								 				$TOTAL_DISCOUNT+=@$totalDisAmount;
-								 				$TOTAL_CGST+=@$totalCGSTAmount;
-								 				$TOTAL_SGST+=@$totalSGSTAmount;
-								 				$TOTAL_SALE+=@$Bill->grand_total;
-								 				$TOTAL_TAXABLE+=@$totalTV;
-								 				?>
-								 			</th>
+								 			<th><?php echo $totalDisAmount; $TOTAL_DISCOUNT+=$totalDisAmount; ?></th>
+								 			<th><?php echo $totalTV; $TOTAL_TAXABLE+=$totalTV; ?></th>
+								 			<th><?php echo $totalCGSTAmount;  $TOTAL_CGST+=$totalCGSTAmount; ?></th>
+								 			<th><?php echo $totalSGSTAmount;  $TOTAL_SGST+=$totalSGSTAmount; ?></th>
+								 			<th><?php echo $totalNet; $TOTAL_SALE+=$totalNet ?></th>
 								 		</tr>
 								 	</table>
 								 </td>
@@ -262,21 +224,21 @@
 							<?php endforeach; ?>
 							<tfoot>
 								<tr>
-									<td style="text-align: right;">
-										<span>TOTAL DISCOUNT</span>
-										<span style="margin-left: 5px; margin-right: 20px;"><b><?php echo @$TOTAL_DISCOUNT; ?></b></span>
-
-										<span>TOTAL TAXABLE</span>
-										<span style="margin-left: 5px; margin-right: 20px;"><b><?php echo @$TOTAL_TAXABLE; ?></b></span>
-
-										<span>TOTAL CGST</span>
-										<span style="margin-left: 5px; margin-right: 20px;"><b><?php echo @$TOTAL_CGST; ?></b></span>
-
-										<span>TOTAL SGST</span>
-										<span style="margin-left: 5px; margin-right: 20px;"><b><?php echo @$TOTAL_SGST; ?></b></span>
-
-										<span>TOTAL SALE</span>
-										<span style="margin-left: 5px; "><b><?php echo @$TOTAL_SALE; ?></b></span>
+									<td style="padding: 0;">
+										<table width="100%" class="table table-bordered qwerty3" style="margin: 0;" cellpadding="0" cellspacing="0">
+									 		<tr>
+									 			<th width="20%">GRAND TOTAL</th>
+									 			<th width="8.88%">-</th>
+									 			<th width="8.88%">-</th>
+									 			<th width="8.88%"><?php echo @$TOTAL_AMT; ?></th>
+									 			<th width="8.88%">-</th>
+									 			<th width="8.88%"><?php echo @$TOTAL_DISCOUNT; ?></th>
+									 			<th width="8.88%"><?php echo @$TOTAL_TAXABLE; ?></th>
+									 			<th width="8.88%"><?php echo @$TOTAL_CGST; ?></th>
+									 			<th width="8.88%"><?php echo @$TOTAL_SGST; ?></th>
+									 			<th width="8.88%"><?php echo @$TOTAL_SALE; ?></th>
+									 		</tr>
+									 	</table>
 									</td>
 								</tr>
 							</tfoot>

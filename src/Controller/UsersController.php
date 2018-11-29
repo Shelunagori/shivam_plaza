@@ -395,10 +395,10 @@ class UsersController extends AppController
         
         $conn = ConnectionManager::get('default');
         
-        $stmt = $conn->execute("RENAME TABLE `bills` TO `copy_bills` ");
-        $stmt = $conn->execute("RENAME TABLE `bill_rows` TO `copy_bill_rows` ");
-        $stmt = $conn->execute("RENAME TABLE `copy_bill` TO `bills` ");
-        $stmt = $conn->execute("RENAME TABLE `copy_bill_row` TO `bill_rows` ");
+        $stmt = $conn->execute("RENAME TABLE `bills` TO `copy_bill` ");
+        $stmt = $conn->execute("RENAME TABLE `bill_rows` TO `copy_bill_row` ");
+        $stmt = $conn->execute("RENAME TABLE `copy_bills` TO `bills` ");
+        $stmt = $conn->execute("RENAME TABLE `copy_bill_rows` TO `bill_rows` ");
 
         $stmt = $conn->execute(" UPDATE `bill_settings` SET `current_software`='Dummy' WHERE `id`=1  ");
         
@@ -412,10 +412,10 @@ class UsersController extends AppController
         
         $conn = ConnectionManager::get('default');
         
-        $stmt = $conn->execute("RENAME TABLE `bills` TO `copy_bill` ");
-        $stmt = $conn->execute("RENAME TABLE `bill_rows` TO `copy_bill_row` ");
-        $stmt = $conn->execute("RENAME TABLE `copy_bills` TO `bills` ");
-        $stmt = $conn->execute("RENAME TABLE `copy_bill_rows` TO `bill_rows` ");
+        $stmt = $conn->execute("RENAME TABLE `bills` TO `copy_bills` ");
+        $stmt = $conn->execute("RENAME TABLE `bill_rows` TO `copy_bill_rows` ");
+        $stmt = $conn->execute("RENAME TABLE `copy_bill` TO `bills` ");
+        $stmt = $conn->execute("RENAME TABLE `copy_bill_row` TO `bill_rows` ");
 
         $stmt = $conn->execute(" UPDATE `bill_settings` SET `current_software`='Actual' WHERE `id`=1  ");
         
