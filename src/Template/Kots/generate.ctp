@@ -375,12 +375,15 @@ $order=$pass[1];
 										        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
 										      },
 										      close: function() {
-										      	var str = $("#customer-mobile").val();
-										        var res = str.split("-");
-										        var name = res[0];
-										        $('#customer-name').val(name);
-										        var mobile = res[1];
-										        $('#customer-mobile').val(mobile);
+										      	if(str){
+										      		var str = $("#customer-mobile").val();
+											        var res = str.split("-");
+											        var name = res[0];
+											        $('#customer-name').val(name);
+											        var mobile = res[1];
+											        $('#customer-mobile').val(mobile);
+										      	}
+										      	
 
 										        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
 										      }
