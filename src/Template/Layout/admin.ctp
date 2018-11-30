@@ -204,7 +204,7 @@
 								<?php } ?>
 								
 								<li>
-									<?php echo '<li>'.$this->Html->link($this->Html->tag('i', '', ['class' => 'icon-lock']).'Log Out', '/Users/logout',['escape' => false]).'</li>'; ?>
+									<?php echo '<li>'.$this->Html->link($this->Html->tag('i', '', ['class' => 'icon-lock']).'Log Out', '/Users/logout',['escape' => false,'class'=>'LogOut']).'</li>'; ?>
 								</li>
 							</ul>
 						</li>
@@ -296,6 +296,11 @@
 		$(document).ready(function() {
 			$('a[role=button]').live('click',function(e) {
 				e.preventDefault();
+			});
+
+			$('.LogOut').live('click',function(e) {
+				var url='<?php echo $this->Url->build(['controller'=>'users','action'=>'logout']); ?>';
+        		window.location.href = url; 
 			});
 			
 			$('.PointBox').live('click',function(e) {

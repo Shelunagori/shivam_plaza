@@ -1,4 +1,4 @@
-<?php $this->set("title", 'Shift Table | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Shift Table | '.$coreVariable['company_name']); ?>
  <style> 
 
 .help-block-error{

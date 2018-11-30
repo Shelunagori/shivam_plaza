@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('mystyle'); ?>
-<?php $this->set("title", 'Food-Costing Report | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Food-Costing Report | '.$coreVariable['company_name']); ?>
 <style type="text/css">
 .catName{
 	font-size: 18px;

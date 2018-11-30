@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('mystyle'); ?>
-<?php $this->set("title", 'KOT Report | DOSA PLAZA'); ?>
+<?php $this->set("title", 'KOT Report | '.$coreVariable['company_name']); ?>
 <style type="text/css">
 .kotdetail td{
 	border: 1px dotted #999;padding: 2px;

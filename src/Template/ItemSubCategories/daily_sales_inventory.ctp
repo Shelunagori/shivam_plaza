@@ -23,7 +23,7 @@
 	}
 </style>
 <?php echo $this->Html->css('mystyle'); ?>
-<?php $this->set("title", 'Daily Sales and Inventory | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Daily Sales and Inventory | '.$coreVariable['company_name']); ?>
 <div class="row" style="margin-top:15px;">
 	<div class="col-md-12 main-div">
 		<div class="portlet box blue-hoki">

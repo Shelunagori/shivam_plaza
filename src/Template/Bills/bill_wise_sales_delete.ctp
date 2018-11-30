@@ -17,7 +17,7 @@
 	}
 </style>
 
-<?php $this->set("title", 'Bill Delete Report | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Bill Delete Report | '.$coreVariable['company_name']); ?>
 <div class="row" style="margin-top:15px;">
 	<div class="col-md-12 main-div">
 		<div class="portlet box blue-hoki">

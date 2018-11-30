@@ -1,4 +1,4 @@
-<?php $this->set("title", 'Dashboard | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Dashboard | '.$coreVariable['company_name']); ?>
 <style type="text/css">
 .top{
 	margin-top: 5px;

@@ -2,7 +2,7 @@
 /**
  * @Author: PHP Poets IT Solutions Pvt. Ltd.
  */
-$this->set('title', 'LOGIN | DOSA PLAZA');
+$this->set('title', 'LOGIN | Bon Pizza');
 if(!empty($id)){
     @$updateId = @$id;
 }

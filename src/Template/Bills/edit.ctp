@@ -1,6 +1,6 @@
 <?php echo $this->Html->css('mystyle'); ?>
 
-<?php $this->set("title", 'Bills | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Bills | '.$coreVariable['company_name']); ?>
 
 <div style="height: 15px;" >.</div>
 <div class="row">

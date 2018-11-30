@@ -17,7 +17,7 @@
         padding: 0; font-size: 12px;
     }
 </style>
-<?php $this->set("title", 'Vegetable Records | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Vegetable Records | '.$coreVariable['company_name']); ?>
 <div class="row" style="margin-top:15px;">
     <div class="col-md-12 main-div">
         <div class="portlet box blue-hoki">

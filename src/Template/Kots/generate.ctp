@@ -1,4 +1,5 @@
-<?php $this->set("title", 'KOT | DOSA PLAZA'); 
+<?php $this->set("title", 'KOT | '.$coreVariable['company_name']);
+
 $pass = $this->request->params['pass'];
 $order=$pass[1]; 
 ?>
@@ -299,7 +300,7 @@ $order=$pass[1];
 											<table width="100%" id="newCustomerTable" style="display:block;">
 												<tr>
 													<td style="padding-right: 5px;width: 40%;" width="40%">
-														<?php echo $this->Form->input('customer_name',['label' => false,'class'=>'form-control  input-sm allowCharSpace', 'placeholder' => 'Name']);?>
+														<?php echo $this->Form->input('customer_name',['label' => false,'class'=>'form-control  input-sm ', 'placeholder' => 'Name']);?>
 													</td>
 													<td style="padding-right: 5px;width: 40%;" width="40%">
 														<?php echo $this->Form->input('customer_mobile',['label' => false,'class'=>'form-control input-sm allowMobileOnly', 'placeholder' => 'Mobile', 'autocomplete' => 'off', 'maxlength' => '10']);?>
@@ -749,7 +750,7 @@ $order=$pass[1];
 			var gst_per=$(this).attr('gst_per');
 			var c=$('#kotBox tbody tr.mainKotTr').length;
 			c=c+1;
-			$('#kotBox').append('<tr row_no='+c+' gst_per='+gst_per+' class=mainKotTr><td style=text-align:center;>'+c+'</td><td item_id='+item_id+'>'+item_name+'</td><td style=text-align:center;><span class=\"minus\">-</span><span class=\"qty\"> 1 </span><span class=\"plus\">+</span></td><td style=\"text-align:center;padding: 5px;\">'+rate+'</td><td style=text-align:center;>'+rate+'</td><td style=\"padding:2px;\"><input type=text class=disPer /></td><td style=\"padding:2px;\"><input type=text class=disAmt /></td><td style=text-align:center;><i class=\"fa fa-ellipsis-h commentRow\" style=\"color: #BDBFC1; font-size: 18px; cursor: pointer;\"></i><textarea style=\"display:none;\" class=\"comment\"></textarea></td><td style=text-align:center;><i class=\"fa fa-trash-o removeRow\" style=\"color: #BDBFC1; font-size: 18px; cursor: pointer;\"></i></td></tr>');
+			$('#kotBox').append('<tr row_no='+c+' gst_per='+gst_per+' class=mainKotTr><td style=text-align:center;>'+c+'</td><td item_id='+item_id+'>'+item_name+'</td><td style=text-align:center;><span class=\"minus\">-</span><span class=\"qty\"> 1 </span><span class=\"plus\">+</span></td><td style=\"text-align:center;padding: 5px;\">'+rate+'</td><td style=text-align:center;>'+rate+'</td><td style=\"padding:2px;\"><input type=text class=disPer /></td><td style=\"padding:2px;\"><input type=text class=disAmt /></td><td style=text-align:center;><i class=\"fa fa-ellipsis-h commentRow\" style=\"color: #BDBFC1; font-size: 18px; cursor: pointer;\"></i><textarea style=\"display:none;\" class=\"comment\"></textarea></td><td style=text-align:center;><i class=\"fa fa-trash-o removeRow\" style=\"color: #ff0000; font-size: 18px; cursor: pointer;\"></i></td></tr>');
 			amountcals();
 		});
 
@@ -797,7 +798,7 @@ $order=$pass[1];
 					
 					var c=$('#kotBox tbody tr.mainKotTr').length;
 					c=c+1; 
-					$('#kotBox').append('<tr row_no='+c+' gst_per='+gst_per+' class=mainKotTr><td style=text-align:center;>'+c+'</td><td item_id='+item_id+'>'+item_name+'</td><td style=text-align:center;><span class=\"minus\">-</span><span class=\"qty\"> 1 </span><span class=\"plus\">+</span></td><td style=\"text-align:center;padding: 5px;\">'+rate+'</td><td style=text-align:center;>'+rate+'</td><td style=\"padding:2px;\"><input type=text class=disPer /></td><td style=\"padding:2px;\"><input type=text class=disAmt /></td><td style=text-align:center;><i class=\"fa fa-ellipsis-h commentRow\" style=\"color: #BDBFC1; font-size: 18px; cursor: pointer;\"></i><textarea style=\"display:none;\" class=\"comment\"></textarea></td><td style=text-align:center;><i class=\"fa fa-trash-o removeRow\" style=\"color: #BDBFC1; font-size: 18px; cursor: pointer;\"></i></td></tr>');
+					$('#kotBox').append('<tr row_no='+c+' gst_per='+gst_per+' class=mainKotTr><td style=text-align:center;>'+c+'</td><td item_id='+item_id+'>'+item_name+'</td><td style=text-align:center;><span class=\"minus\">-</span><span class=\"qty\"> 1 </span><span class=\"plus\">+</span></td><td style=\"text-align:center;padding: 5px;\">'+rate+'</td><td style=text-align:center;>'+rate+'</td><td style=\"padding:2px;\"><input type=text class=disPer /></td><td style=\"padding:2px;\"><input type=text class=disAmt /></td><td style=text-align:center;><i class=\"fa fa-ellipsis-h commentRow\" style=\"color: #BDBFC1; font-size: 18px; cursor: pointer;\"></i><textarea style=\"display:none;\" class=\"comment\"></textarea></td><td style=text-align:center;><i class=\"fa fa-trash-o removeRow\" style=\"color: #ff0000; font-size: 18px; cursor: pointer;\"></i></td></tr>');
 					amountcals();
 				}
 
@@ -831,7 +832,7 @@ $order=$pass[1];
 				
 				var c=$('#kotBox tbody tr.mainKotTr').length;
 				c=c+1; 
-				$('#kotBox').append('<tr row_no='+c+' gst_per='+gst_per+' class=mainKotTr><td style=text-align:center;>'+c+'</td><td item_id='+item_id+'>'+item_name+'</td><td style=text-align:center;><span class=\"minus\">-</span><span class=\"qty\"> 1 </span><span class=\"plus\">+</span></td><td style=\"text-align:center;padding: 5px;\">'+rate+'</td><td style=text-align:center;>'+rate+'</td><td style=\"padding:2px;\"><input type=text class=disPer /></td><td style=\"padding:2px;\"><input type=text class=disAmt /></td><td style=text-align:center;><i class=\"fa fa-ellipsis-h commentRow\" style=\"color: #BDBFC1; font-size: 18px; cursor: pointer;\"></i><textarea style=\"display:none;\" class=\"comment\"></textarea></td><td style=text-align:center;><i class=\"fa fa-trash-o removeRow\" style=\"color: #BDBFC1; font-size: 18px; cursor: pointer;\"></i></td></tr>');
+				$('#kotBox').append('<tr row_no='+c+' gst_per='+gst_per+' class=mainKotTr><td style=text-align:center;>'+c+'</td><td item_id='+item_id+'>'+item_name+'</td><td style=text-align:center;><span class=\"minus\">-</span><span class=\"qty\"> 1 </span><span class=\"plus\">+</span></td><td style=\"text-align:center;padding: 5px;\">'+rate+'</td><td style=text-align:center;>'+rate+'</td><td style=\"padding:2px;\"><input type=text class=disPer /></td><td style=\"padding:2px;\"><input type=text class=disAmt /></td><td style=text-align:center;><i class=\"fa fa-ellipsis-h commentRow\" style=\"color: #BDBFC1; font-size: 18px; cursor: pointer;\"></i><textarea style=\"display:none;\" class=\"comment\"></textarea></td><td style=text-align:center;><i class=\"fa fa-trash-o removeRow\" style=\"color: #ff0000; font-size: 18px; cursor: pointer;\"></i></td></tr>');
 				amountcals();
 			}
 
@@ -927,7 +928,6 @@ $order=$pass[1];
 			var url='".$this->Url->build(['controller'=>'Bills','action'=>'addKotBill'])."';
 			url=url+'?myJSON='+myJSON+'&total='+total+'&roundOff='+roundOff+'&net='+net+'&c_name='+c_name+'&c_mobile_no='+c_mobile_no+'&c_address='+c_address+'&order_type='+order_type+'&employee_id='+employee_id+'&offer_id='+offer_id+'&oneComment='+oneComment+'&payment_type='+payment_type+'&c_address='+c_address;
 			url=encodeURI(url);
-			
 			$.ajax({
 				url: url,
 				dataType: 'json'

@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('mystyle'); ?>
-<?php $this->set("title", 'Expense Voucher | DOSA PLAZA');  //pr($expanseVoucher);exit;?>
+<?php $this->set("title", 'Expense Voucher | '.$coreVariable['company_name']); ?>
 <!-- BEGIN PAGE CONTENT-->
 <div class="row" style="margin-top:15px;">
     <div class="col-md-12 main-div">

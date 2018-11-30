@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('mystyle'); ?>
-<?php $this->set("title", 'Vendor | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Vendor | '.$coreVariable['company_name']); ?>
 <!-- BEGIN PAGE CONTENT-->
 	
 <div class="row" style="margin-top:15px;">

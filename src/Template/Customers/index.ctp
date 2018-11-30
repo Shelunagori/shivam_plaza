@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('mystyle'); ?>
-<?php $this->set("title", ' Customer-List | DOSA PLAZA'); ?>
+<?php $this->set("title", ' Customer-List | '.$coreVariable['company_name']); ?>
 <div style="height: 15px;" >.</div>
 <div class="row">
     <div class="col-md-12 main-div">

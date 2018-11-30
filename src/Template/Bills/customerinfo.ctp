@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('mystyle'); ?>
-<?php $this->set("title", '  Edit-Customer | DOSA PLAZA'); ?>
+<?php $this->set("title", '  Edit-Customer | '.$coreVariable['company_name']); ?>
 
 
 <style>

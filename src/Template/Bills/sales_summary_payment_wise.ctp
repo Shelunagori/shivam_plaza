@@ -1,5 +1,5 @@
 <?php echo $this->Html->css('mystyle'); ?>
-<?php $this->set("title", 'Sales Summary Payment Wise | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Sales Summary Payment Wise | '.$coreVariable['company_name']); ?>
 <style type="text/css" media="print">
 @page {
 	width:100%;

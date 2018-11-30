@@ -1,4 +1,4 @@
-<?php $this->set("title", 'Item Group + Item Wise Sales Report | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Item Group + Item Wise Sales Report | '.$coreVariable['company_name']); ?>
 <style type="text/css" media="print">
 @page {
 	width:100%;

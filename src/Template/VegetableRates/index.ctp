@@ -13,7 +13,7 @@
 }
 </style>
 
-<?php $this->set("title", 'Vegetable Rates | DOSA PLAZA'); ?>
+<?php $this->set("title", 'Vegetable Rates | '.$coreVariable['company_name']); ?>
 <div class="row" style="margin-top:15px;">
     <div class="col-md-12 main-div">
         <div class="portlet box blue-hoki">

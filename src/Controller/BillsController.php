@@ -314,7 +314,11 @@ class BillsController extends AppController
         $bill = $this->Bills->newEntity();
 
         //SAVE CUSTOMER INFO 
-        $IsCustomerExist=$this->Bills->Customers->find()->where(['mobile_no' => $c_mobile_no])->first();
+        $IsCustomerExist="";
+        if($c_mobile_no){
+            $IsCustomerExist=$this->Bills->Customers->find()->where(['mobile_no' => $c_mobile_no])->first();
+        }
+        
         if($IsCustomerExist){
             //update
             $Customer=$this->Bills->Customers->get($IsCustomerExist->id);
@@ -339,7 +343,7 @@ class BillsController extends AppController
             }else{
                 $Customer->customer_code=2001;
             }
-            if($Customer->mobile_no){
+            if($Customer->name){
                 $this->Bills->Customers->save($Customer);
             }
 
