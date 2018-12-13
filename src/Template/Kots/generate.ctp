@@ -369,21 +369,21 @@ $order=$pass[1];
 										        log( ui.item ?
 										          "Selected: " + ui.item.label :
 										          "Nothing selected, input was " + this.value);
-										        
 										      },
 										      open: function() {
 										        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
 										      },
 										      close: function() {
-										      	if(str){
-										      		var str = $("#customer-mobile").val();
-											        var res = str.split("-");
-											        var name = res[0];
-											        $('#customer-name').val(name);
-											        var mobile = res[1];
-											        $('#customer-mobile').val(mobile);
+										      	var str = $("#customer-mobile").val();
+										      	var res = str.split("-");
+										      	if(res.length==2){
+										      		if(str){
+												        var name = res[0];
+												        $('#customer-name').val(name);
+												        var mobile = res[1];
+												        $('#customer-mobile').val(mobile);
+											      	}
 										      	}
-										      	
 
 										        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
 										      }

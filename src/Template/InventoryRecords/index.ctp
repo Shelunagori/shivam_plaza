@@ -271,7 +271,7 @@ $(document).ready(function() {
 
     ComponentsPickers.init();
 });
-jQuery(window).scrollTop(jQuery('#CurrentDate').offset().top);
+
 ";
 ?>
 <?php echo $this->Html->scriptBlock($js, array('block' => 'scriptBottom'));  ?>

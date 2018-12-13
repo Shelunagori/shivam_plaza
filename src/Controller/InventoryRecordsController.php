@@ -57,6 +57,7 @@ class InventoryRecordsController extends AppController
 
 
         $currentDate = date('Y-m-d');
+        
         $OldInventoryRecords = $this->InventoryRecords->find()
                                 ->where(['transaction_date' => date('Y-m-d', strtotime('-1 day', strtotime($currentDate))) ])
                                 ->contain(['ItemLists']);
@@ -80,12 +81,34 @@ class InventoryRecordsController extends AppController
             $TodayOBData[$TodayInventoryRecord->item_list->id]['consumption']=$TodayInventoryRecord->consumption;
         }
 
+        $date_from2 = date('Y-m-d', strtotime('-1 day', strtotime($date_from1)));
+
         $OldInventoryRecords = $this->InventoryRecords->find()
-                                ->where(['transaction_date >=' => $date_from1, 'transaction_date <' => $currentDate])
+                                ->where(['transaction_date >=' => $date_from2, 'transaction_date <' => $currentDate])
                                 ->order(['transaction_date'=>'ASC'])
                                 ->contain(['ItemLists']);
         
         $OldData=[];
+        $firstDate = $date_from1;
+        $lastDate = date('Y-m-d', strtotime('-1 day', strtotime($currentDate)));
+        while (strtotime($firstDate) <= strtotime($lastDate)) {
+             $OldData[strtotime($firstDate)][0]['projection']=0;
+
+            $OldData[strtotime($firstDate)][0]['adjustment']=0;
+
+            $OldData[strtotime($firstDate)][0]['mall']=0;
+
+            $OldData[strtotime($firstDate)][0]['road']=0;
+            
+            $OldData[strtotime($firstDate)][0]['wastage']=0;
+
+            $OldData[strtotime($firstDate)][0]['closing_balance']=0;
+
+            $OldData[strtotime($firstDate)][0]['consumption']=0;
+
+            $firstDate = date ("Y-m-d", strtotime("+1 day", strtotime($firstDate)));
+        }
+
         foreach ($OldInventoryRecords as $OldInventoryRecord) {
             $OldData[strtotime($OldInventoryRecord->transaction_date)][$OldInventoryRecord->item_list->id]['projection']=$OldInventoryRecord->projection;
 
@@ -101,6 +124,7 @@ class InventoryRecordsController extends AppController
 
             $OldData[strtotime($OldInventoryRecord->transaction_date)][$OldInventoryRecord->item_list->id]['consumption']=$OldInventoryRecord->consumption;
         }
+        //pr($OldData); exit();
 
 
 

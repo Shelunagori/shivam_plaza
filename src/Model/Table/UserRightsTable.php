@@ -42,6 +42,7 @@ class UserRightsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Employees');
         $this->belongsTo('Pages', [
             'foreignKey' => 'page_id',
             'joinType' => 'INNER'

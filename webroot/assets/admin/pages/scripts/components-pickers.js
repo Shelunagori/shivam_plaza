@@ -85,7 +85,7 @@ var ComponentsPickers = function () {
         });
 
         $('#reportrange').daterangepicker({
-                opens: (Metronic.isRTL() ? 'left' : 'right'),
+                opens: ('left'),
                 startDate: moment().subtract('days', 29),
                 endDate: moment(),
                 showDropdowns: true,
